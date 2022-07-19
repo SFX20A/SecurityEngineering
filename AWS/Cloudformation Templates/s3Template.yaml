@@ -1,0 +1,29 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: 'AWS CloudFormation S3 Bucket Template, with the following features:
+  1. Private S3 Bucket
+  2. AWS SSE-S3
+  3. Public Access Block Enabled
+  4. Versioning Configuration Enabled
+  This CF template requires a user to input a unique bucket name.'
+Parameters:
+  BucketName:
+    Type: String
+    Description: 'Unique name for S3 Bucket'
+Resources:
+  S3Bucket:
+    Type: 'AWS::S3::Bucket'
+    Properties:
+      AccessControl: Private
+      BucketName: !Ref BucketName
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      VersioningConfiguration:
+        Status: Enabled
+
