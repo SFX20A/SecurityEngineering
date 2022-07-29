@@ -1,0 +1,12 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: AWS CloudFormation Template for Custom Identifiers in AWS Macie
+# Note: Macie requires a session before creating a FindingsFilter or a CustomIdentifier. This template does not include the creation of a session.
+# if a session is required, please look at macieCustomIdentifierTemplate.yml.
+Resources:
+  MacieCustomIdentifier:
+    Type: 'AWS::Macie::CustomDataIdentifier'
+    Properties:
+      Description: CFCustomIdentifier
+      MaximumMatchDistance: 50
+      Name: CFCustomIdentifier
+      Regex: '[6|8|9]\\d{7}|\\+65[6|8|9]\\d{7}|\\+65\\s[6|8|9]\\d{7}'

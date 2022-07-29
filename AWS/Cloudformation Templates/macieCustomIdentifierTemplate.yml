@@ -1,0 +1,19 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: AWS CloudFormation Template for Custom Identifiers in AWS Macie
+# Note: This template creates a AWS Macie Custom Identifier, and also a session for AWS Macie. 
+# If a session for AWS Macie has already been created, please refer to macieCustomIdentifierTemplate2.
+Resources:
+  MacieCustomIdentifier:
+    Type: 'AWS::Macie::CustomDataIdentifier'
+    DependsOn: Session
+    Properties:
+      Description: CFCustomIdentifier
+      MaximumMatchDistance: 50
+      Name: CFCustomIdentifier
+      #Creates Custom Identifier for Singaporean Telephone
+      Regex: '[6|8|9]\\d{7}|\\+65[6|8|9]\\d{7}|\\+65\\s[6|8|9]\\d{7}'
+  Session:
+    Type: 'AWS::Macie::Session'
+    Properties:
+      FindingPublishingFrequency: FIFTEEN_MINUTES
+      Status: ENABLED
