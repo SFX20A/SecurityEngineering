@@ -1,8 +1,7 @@
 AWSTemplateFormatVersion: 2010-09-09
 Description: 'AWS CloudFormation Template for Custom Identifiers in AWS Macie, with the following features:
 1. Custom Identifier Name, Description and Custom Regex
-2. Maximum Match Distance of 50 character sequences
-3. 15 minutes policy finding publishing frequency to AWS Security Hub/ Event Bridge'
+2. Maximum Match Distance of 50 character sequences'
 # Note: Macie requires a session before creating a FindingsFilter or a CustomIdentifier. This template does not include the creation of a session.
 # if a session is required, please look at macieCustomIdentifierTemplate.yml.
 Parameters:
