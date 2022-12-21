@@ -1,0 +1,3907 @@
+{
+  "version": "Notebook/1.0",
+  "items": [
+    {
+      "type": 1,
+      "content": {
+        "json": "## Dashboard Name\r\n---\r\n"
+      },
+      "name": "text - 23"
+    },
+    {
+      "type": 11,
+      "content": {
+        "version": "LinkItem/1.0",
+        "style": "tabs",
+        "links": [
+          {
+            "id": "20847ce8-91bc-4d8b-b878-a5a41c95c31c",
+            "cellValue": "selectedTab",
+            "linkTarget": "parameter",
+            "linkLabel": "Security Alerts",
+            "subTarget": "SA",
+            "preText": "Security Alerts",
+            "style": "link"
+          },
+          {
+            "id": "18a4a585-2176-4d9f-907c-8e8d5f984efa",
+            "cellValue": "selectedTab",
+            "linkTarget": "parameter",
+            "linkLabel": "Azure Firewall",
+            "subTarget": "AzureFirewall",
+            "style": "link"
+          },
+          {
+            "id": "f564709d-1658-46a1-8b44-892210e13017",
+            "cellValue": "selectedTab",
+            "linkTarget": "parameter",
+            "linkLabel": "Defender for Cloud",
+            "subTarget": "DFC",
+            "style": "link"
+          },
+          {
+            "id": "1f6661e2-f873-4d56-879d-4d085d8cf1d4",
+            "cellValue": "selectedTab",
+            "linkTarget": "parameter",
+            "linkLabel": "Web Application Firewall",
+            "subTarget": "WAF",
+            "style": "link"
+          },
+          {
+            "id": "ef1548c5-ef55-4eaa-8a81-b049cb93b56c",
+            "cellValue": "selectedTab",
+            "linkTarget": "parameter",
+            "linkLabel": "Key Vault",
+            "subTarget": "KV",
+            "style": "link"
+          },
+          {
+            "id": "ef1548c5-ef55-4eaa-8a81-b049cb93b56a",
+            "cellValue": "selectedTab",
+            "linkTarget": "parameter",
+            "linkLabel": "Azure Activity",
+            "subTarget": "AzureActivity",
+            "style": "link"
+          },
+          {
+            "id": "ef1548c5-ef55-4eaa-8a81-b049cb93b56b",
+            "cellValue": "selectedTab",
+            "linkTarget": "parameter",
+            "linkLabel": "Windows",
+            "subTarget": "WIAM",
+            "style": "link"
+          },
+          {
+            "id": "ef1548c5-ef55-4eaa-8a81-b049cb93b56d",
+            "cellValue": "selectedTab",
+            "linkTarget": "parameter",
+            "linkLabel": "Linux",
+            "subTarget": "Linux",
+            "style": "link"
+          }
+        ]
+      },
+      "name": "links - 24"
+    },
+    {
+      "type": 1,
+      "content": {
+        "json": "This dashboard shows an overall view of all alerts in Microsoft Sentinel."
+      },
+      "conditionalVisibility": {
+        "parameterName": "selectedTab",
+        "comparison": "isEqualTo",
+        "value": "SA"
+      },
+      "name": "text - 2"
+    },
+    {
+      "type": 9,
+      "content": {
+        "version": "KqlParameterItem/1.0",
+        "parameters": [
+          {
+            "id": "08f97f34-6264-4fa3-90b5-16b89422d285",
+            "version": "KqlParameterItem/1.0",
+            "name": "TimeRange",
+            "type": 4,
+            "isRequired": true,
+            "value": {
+              "durationMs": 1209600000
+            },
+            "typeSettings": {
+              "selectableValues": [
+                {
+                  "durationMs": 300000
+                },
+                {
+                  "durationMs": 900000
+                },
+                {
+                  "durationMs": 1800000
+                },
+                {
+                  "durationMs": 3600000
+                },
+                {
+                  "durationMs": 14400000
+                },
+                {
+                  "durationMs": 43200000
+                },
+                {
+                  "durationMs": 86400000
+                },
+                {
+                  "durationMs": 172800000
+                },
+                {
+                  "durationMs": 259200000
+                },
+                {
+                  "durationMs": 604800000
+                },
+                {
+                  "durationMs": 1209600000
+                },
+                {
+                  "durationMs": 2419200000
+                },
+                {
+                  "durationMs": 2592000000
+                },
+                {
+                  "durationMs": 5184000000
+                },
+                {
+                  "durationMs": 7776000000
+                }
+              ]
+            }
+          },
+          {
+            "id": "cd98a9c7-5dbd-4f92-a967-7ed1c781132a",
+            "version": "KqlParameterItem/1.0",
+            "name": "AlertSeverity",
+            "type": 2,
+            "isRequired": true,
+            "multiSelect": true,
+            "quote": "'",
+            "delimiter": ",",
+            "query": "SecurityAlert\r\n| summarize Count = count() by AlertSeverity\r\n| order by Count desc, AlertSeverity asc\r\n| project Value = AlertSeverity, Label = strcat(AlertSeverity, ' - ', Count)",
+            "value": [
+              "value::all"
+            ],
+            "typeSettings": {
+              "additionalResourceOptions": [
+                "value::all"
+              ]
+            },
+            "timeContext": {
+              "durationMs": 0
+            },
+            "timeContextFromParameter": "TimeRange",
+            "queryType": 0,
+            "resourceType": "microsoft.operationalinsights/workspaces"
+          },
+          {
+            "id": "df0fbc31-ade1-4488-9109-a4f647ad8fe2",
+            "version": "KqlParameterItem/1.0",
+            "name": "ProductName",
+            "type": 2,
+            "isRequired": true,
+            "multiSelect": true,
+            "quote": "'",
+            "delimiter": ",",
+            "query": "SecurityAlert\r\n| summarize Count = count() by ProductName\r\n| order by Count desc, ProductName asc\r\n| project Value = ProductName, Label = strcat(ProductName, ' - ', Count)",
+            "value": [
+              "value::all"
+            ],
+            "typeSettings": {
+              "additionalResourceOptions": [
+                "value::all"
+              ]
+            },
+            "timeContext": {
+              "durationMs": 0
+            },
+            "timeContextFromParameter": "TimeRange",
+            "queryType": 0,
+            "resourceType": "microsoft.operationalinsights/workspaces"
+          }
+        ],
+        "style": "pills",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces"
+      },
+      "conditionalVisibility": {
+        "parameterName": "selectedTab",
+        "comparison": "isEqualTo",
+        "value": "SA"
+      },
+      "name": "parameters - 3"
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "let data = SecurityAlert\n| where \"{AlertSeverity:lable}\" == \"All\" or AlertSeverity in ({AlertSeverity})\n| where \"{ProductName:lable}\" == \"All\" or ProductName in ({ProductName});\ndata\n| summarize Count = count() by AlertSeverity\n| join kind = inner (data\n | make-series Trend = count() default = 0 on TimeGenerated from {TimeRange:start} to {TimeRange:end} step {TimeRange:grain} by AlertSeverity)\n on AlertSeverity\n | project-away TimeGenerated\n| extend AlertSeveritys = AlertSeverity\n| union (\n data \n | summarize Count = count() \n | extend jkey = 1\n | join kind=inner (data\n | make-series Trend = count() default = 0 on TimeGenerated from {TimeRange:start} to {TimeRange:end} step {TimeRange:grain}\n | extend jkey = 1) on jkey\n | extend AlertSeverity = 'All', AlertSeveritys = '*' \n)\n| extend Severity = iif(AlertSeverity == \"All\", 0,iif(AlertSeverity == \"High\", 1, iif(AlertSeverity == \"Medium\", 2, iif(AlertSeverity == \"Low\", 3, 4))))\n| order by Severity asc\n",
+        "size": 3,
+        "title": "Security Alerts by Severity",
+        "timeContextFromParameter": "TimeRange",
+        "exportFieldName": "AlertSeverity",
+        "exportParameterName": "AlertSeverityPicker",
+        "exportDefaultValue": "All",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces",
+        "visualization": "tiles",
+        "tileSettings": {
+          "titleContent": {
+            "columnMatch": "AlertSeverity",
+            "formatter": 1,
+            "formatOptions": {
+              "showIcon": true
+            }
+          },
+          "leftContent": {
+            "columnMatch": "Count",
+            "formatter": 12,
+            "formatOptions": {
+              "showIcon": true
+            },
+            "numberFormat": {
+              "unit": 17,
+              "options": {
+                "style": "decimal",
+                "maximumFractionDigits": 2,
+                "maximumSignificantDigits": 3
+              }
+            }
+          },
+          "secondaryContent": {
+            "columnMatch": "Trend",
+            "formatter": 9,
+            "formatOptions": {
+              "showIcon": true
+            }
+          },
+          "showBorder": false,
+          "sortOrderField": 1
+        }
+      },
+      "conditionalVisibility": {
+        "parameterName": "selectedTab",
+        "comparison": "isEqualTo",
+        "value": "SA"
+      },
+      "name": "SecurityAlertsbySeverity"
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "let data = SecurityAlert\r\n| where \"{AlertSeverity:lable}\" == \"All\" or AlertSeverity in ({AlertSeverity})\r\n| where \"{ProductName:lable}\" == \"All\" or ProductName in ({ProductName})\r\n| where AlertSeverity == '{AlertSeverityPicker}' or '{AlertSeverityPicker}' == \"All\";\r\ndata\r\n| summarize Count = count() by ProductName\r\n| join kind = inner (data\r\n | make-series Trend = count() default = 0 on TimeGenerated from {TimeRange:start} to {TimeRange:end} step {TimeRange:grain} by ProductName)\r\n on ProductName\r\n | project-away TimeGenerated\r\n| extend ProductNames = ProductName\r\n| union (\r\n data \r\n | summarize Count = count() \r\n | extend jkey = 1\r\n | join kind=inner (data\r\n | make-series Trend = count() default = 0 on TimeGenerated from {TimeRange:start} to {TimeRange:end} step {TimeRange:grain}\r\n | extend jkey = 1) on jkey\r\n | extend ProductName = 'All', ProductNames = '*' \r\n)\r\n| order by Count desc\r\n",
+        "size": 3,
+        "title": "Security Alerts by Product",
+        "timeContextFromParameter": "TimeRange",
+        "exportFieldName": "ProductName",
+        "exportParameterName": "ProductNamePicker",
+        "exportDefaultValue": "All",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces",
+        "visualization": "tiles",
+        "tileSettings": {
+          "titleContent": {
+            "columnMatch": "ProductName",
+            "formatter": 1,
+            "formatOptions": {
+              "showIcon": true
+            }
+          },
+          "leftContent": {
+            "columnMatch": "Count",
+            "formatter": 12,
+            "formatOptions": {
+              "palette": "auto",
+              "showIcon": true
+            },
+            "numberFormat": {
+              "unit": 17,
+              "options": {
+                "maximumSignificantDigits": 3,
+                "maximumFractionDigits": 2
+              }
+            }
+          },
+          "secondaryContent": {
+            "columnMatch": "Trend",
+            "formatter": 9,
+            "formatOptions": {
+              "showIcon": true
+            }
+          },
+          "showBorder": false
+        }
+      },
+      "conditionalVisibility": {
+        "parameterName": "selectedTab",
+        "comparison": "isEqualTo",
+        "value": "SA"
+      },
+      "name": "SecurityAlertsbyProduct"
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "SecurityAlert\r\n| where \"{AlertSeverity:lable}\" == \"All\" or AlertSeverity in ({AlertSeverity})\r\n| where \"{ProductName:lable}\" == \"All\" or ProductName in ({ProductName})\r\n| where AlertSeverity == '{AlertSeverityPicker}' or '{AlertSeverityPicker}' == \"All\"\r\n| where ProductName == '{ProductNamePicker}' or '{ProductNamePicker}' == \"All\"\r\n| summarize count() by AlertSeverity, bin(TimeGenerated, 1d)",
+        "size": 3,
+        "title": "Security Alerts Over Time by Severity",
+        "timeContextFromParameter": "TimeRange",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces",
+        "visualization": "linechart",
+        "chartSettings": {
+          "seriesLabelSettings": [
+            {
+              "seriesName": "Medium",
+              "color": "orange"
+            },
+            {
+              "seriesName": "Low",
+              "color": "yellow"
+            },
+            {
+              "seriesName": "Informational",
+              "color": "gray"
+            },
+            {
+              "seriesName": "High",
+              "color": "red"
+            }
+          ]
+        }
+      },
+      "conditionalVisibility": {
+        "parameterName": "selectedTab",
+        "comparison": "isEqualTo",
+        "value": "SA"
+      },
+      "name": "SecurityAlertsOverTimebySeverity"
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "SecurityAlert\r\n| where \"{AlertSeverity:lable}\" == \"All\" or AlertSeverity in ({AlertSeverity})\r\n| where \"{ProductName:lable}\" == \"All\" or ProductName in ({ProductName})\r\n| where AlertSeverity == '{AlertSeverityPicker}' or '{AlertSeverityPicker}' == \"All\"\r\n| where ProductName == '{ProductNamePicker}' or '{ProductNamePicker}' == \"All\"\r\n| summarize count() by ProductName, bin(TimeGenerated, 1d)",
+        "size": 3,
+        "title": "Security Alerts Over Time by Product",
+        "timeContextFromParameter": "TimeRange",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces",
+        "visualization": "unstackedbar",
+        "chartSettings": {
+          "seriesLabelSettings": [
+            {
+              "seriesName": "Medium",
+              "color": "orange"
+            },
+            {
+              "seriesName": "Low",
+              "color": "yellow"
+            },
+            {
+              "seriesName": "Informational",
+              "color": "gray"
+            },
+            {
+              "seriesName": "High",
+              "color": "red"
+            }
+          ]
+        }
+      },
+      "conditionalVisibility": {
+        "parameterName": "selectedTab",
+        "comparison": "isEqualTo",
+        "value": "SA"
+      },
+      "name": "SecurityAlertsOverTimebyProduct"
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "SecurityAlert\r\n| where \"{AlertSeverity:lable}\" == \"All\" or AlertSeverity in ({AlertSeverity})\r\n| where \"{ProductName:lable}\" == \"All\" or ProductName in ({ProductName})\r\n| where AlertSeverity == '{AlertSeverityPicker}' or '{AlertSeverityPicker}' == \"All\"\r\n| where ProductName == '{ProductNamePicker}' or '{ProductNamePicker}' == \"All\"\r\n| extend Entities = iff(isempty(Entities), todynamic('[{\"dummy\" : \"\"}]'), todynamic(Entities))\r\n| mvexpand Entities\r\n| evaluate bag_unpack(Entities, \"Entity_\")\r\n| extend Entity_Type = columnifexists(\"Entity_Type\", \"\")\r\n| extend Entity_Name = columnifexists(\"Entity_Name\", \"\")\r\n| extend Entity_ResourceId = columnifexists(\"Entity_ResourceId\", \"\")\r\n| extend Entity_Directory = columnifexists(\"Entity_Directory\", \"\")\r\n| extend Entity_Value = columnifexists(\"Entity_Value\", \"\")\r\n| extend Entity_HostName = columnifexists(\"Entity_HostName\", \"\")\r\n| extend Entity_Address = columnifexists(\"Entity_Address\", \"\")\r\n| extend Entity_ProcessId = columnifexists(\"Entity_ProcessId\", \"\")\r\n| extend Entity_Url = columnifexists(\"Entity_Url\", \"\")\r\n| extend Target = iif(Entity_Type == \"account\", Entity_Name, iif(Entity_Type == \"azure-resource\", Entity_ResourceId, iif(Entity_Type == \"cloud-application\", Entity_Name, iif(Entity_Type == \"dns\", Entity_Name, iif(Entity_Type == \"file\", strcat(Entity_Directory, \"\\\\\", Entity_Name), iif(Entity_Type == \"filehash\", Entity_Value, iif(Entity_Type == \"host\", Entity_HostName, iif(Entity_Type == \"ip\" , Entity_Address, iif(Entity_Type == \"malware\", Entity_HostName, iif(Entity_Type == \"network-connection\", Entity_Name, iif(Entity_Type == \"process\", Entity_ProcessId, iif(Entity_Type == \"registry-key\", Entity_Name, iif(Entity_Type == \"registry-value\", Entity_Name, iif(Entity_Type == \"security-group\", Entity_Name, iif(Entity_Type == \"url\", Entity_Url, \"NoTarget\")))))))))))))))\r\n| where Entity_Type in (\"account\", \"host\", \"ip\", \"url\", \"azure-resource\", \"cloud-application\", \"dns\", \"file\", \"filehash\", \"malware\", \"network-connection\", \"process\", \"registry-key\", \"registry-value\", \"security-group\")\r\n| summarize count() by bin(TimeGenerated, 1d), Target, Entity_Type\r\n| project-away TimeGenerated\r\n| order by count_ desc\r\n\r\n",
+        "size": 0,
+        "title": "Top Entities in Security Alerts",
+        "timeContextFromParameter": "TimeRange",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces"
+      },
+      "conditionalVisibility": {
+        "parameterName": "selectedTab",
+        "comparison": "isEqualTo",
+        "value": "SA"
+      },
+      "name": "TopEntitiesinSecurityAlerts"
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "SecurityAlert\r\n| where \"{AlertSeverity:lable}\" == \"All\" or AlertSeverity in ({AlertSeverity})\r\n| where \"{ProductName:lable}\" == \"All\" or ProductName in ({ProductName})\r\n| where AlertSeverity == '{AlertSeverityPicker}' or '{AlertSeverityPicker}' == \"All\"\r\n| where ProductName == '{ProductNamePicker}' or '{ProductNamePicker}' == \"All\"\r\n| extend Entities = iff(isempty(Entities), todynamic('[{\"dummy\" : \"\"}]'), todynamic(Entities))\r\n| mvexpand Entities\r\n| evaluate bag_unpack(Entities, \"Entity_\")\r\n| extend Entity_Type = columnifexists(\"Entity_Type\", \"\")\r\n| where Entity_Type in (\"account\", \"alerts\", \"azure-resource\", \"cloud-application\", \"dns\", \"file\", \"filehash\", \"host\", \"host-logon-session\", \"ip\", \"malware\", \"network-connection\", \"process\", \"registry-key\", \"registry-value\", \"security-group\", \"SrvSvcSessionEntry\", \"url\")\r\n| summarize count() by Entity_Type\r\n| order by count_ desc",
+        "size": 0,
+        "title": "Count of Entities in Security Alerts by Type",
+        "timeContextFromParameter": "TimeRange",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces",
+        "visualization": "unstackedbar"
+      },
+      "conditionalVisibility": {
+        "parameterName": "selectedTab",
+        "comparison": "isEqualTo",
+        "value": "SA"
+      },
+      "name": "CountofEntitiesinSecurityAlertsbyType"
+    },
+    {
+      "type": 9,
+      "content": {
+        "version": "KqlParameterItem/1.0",
+        "parameters": [
+          {
+            "id": "ab7d6c51-d7df-436c-96a2-429163aa50ec",
+            "version": "KqlParameterItem/1.0",
+            "name": "TimeRange",
+            "type": 4,
+            "isRequired": true,
+            "typeSettings": {
+              "selectableValues": [
+                {
+                  "durationMs": 300000
+                },
+                {
+                  "durationMs": 900000
+                },
+                {
+                  "durationMs": 1800000
+                },
+                {
+                  "durationMs": 3600000
+                },
+                {
+                  "durationMs": 14400000
+                },
+                {
+                  "durationMs": 43200000
+                },
+                {
+                  "durationMs": 86400000
+                },
+                {
+                  "durationMs": 172800000
+                },
+                {
+                  "durationMs": 259200000
+                },
+                {
+                  "durationMs": 604800000
+                },
+                {
+                  "durationMs": 1209600000
+                },
+                {
+                  "durationMs": 2419200000
+                },
+                {
+                  "durationMs": 2592000000
+                },
+                {
+                  "durationMs": 5184000000
+                },
+                {
+                  "durationMs": 7776000000
+                }
+              ],
+              "allowCustom": false
+            },
+            "value": {
+              "durationMs": 5184000000
+            }
+          },
+          {
+            "id": "add90eb3-ff5f-4b19-9658-ff15c8043af5",
+            "version": "KqlParameterItem/1.0",
+            "name": "Workspaces",
+            "type": 5,
+            "isRequired": true,
+            "multiSelect": true,
+            "quote": "'",
+            "delimiter": ",",
+            "query": "where type =~ 'microsoft.operationalinsights/workspaces'\r\n| project id, name\r\n| order by name desc",
+            "crossComponentResources": [
+              "value::selected"
+            ],
+            "value": [
+              "/subscriptions/<subscriptionID>/resourceGroups/<resourceGroup>/providers/Microsoft.OperationalInsights/workspaces/<LogAnalyticsWorkspace>"
+            ],
+            "typeSettings": {
+              "additionalResourceOptions": [
+                "value::100"
+              ]
+            },
+            "queryType": 1,
+            "resourceType": "microsoft.resourcegraph/resources"
+          },
+          {
+            "id": "5084e141-6c56-4d7f-bd8a-09f7ef9af1bc",
+            "version": "KqlParameterItem/1.0",
+            "name": "Resource",
+            "label": "Azure Firewalls",
+            "type": 5,
+            "isRequired": true,
+            "multiSelect": true,
+            "quote": "'",
+            "delimiter": ",",
+            "query": "where type =~ 'Microsoft.Network/azureFirewalls'\r\n| project id, name",
+            "crossComponentResources": [
+              "value::selected"
+            ],
+            "value": [
+              "value::all"
+            ],
+            "typeSettings": {
+              "additionalResourceOptions": [
+                "value::all"
+              ]
+            },
+            "queryType": 1,
+            "resourceType": "microsoft.resourcegraph/resources"
+          },
+          {
+            "id": "13d9f6e9-9290-4b1e-b0d0-a7c0ebdc1aed",
+            "version": "KqlParameterItem/1.0",
+            "name": "Help",
+            "label": "Show Help",
+            "type": 10,
+            "description": "This will show some help information to help you understand the page you are on",
+            "isRequired": true,
+            "typeSettings": {
+              "additionalResourceOptions": []
+            },
+            "jsonData": "[\r\n { \"value\": \"Yes\", \"label\": \"Yes\"},\r\n {\"value\": \"No\", \"label\": \"No\", \"selected\":true },\r\n { \"value\": \"Change Log\", \"label\": \"Change Log\"}\r\n]"
+          },
+          {
+            "id": "68f2cb32-03d4-4307-8eb5-1f66dfc09a85",
+            "version": "KqlParameterItem/1.0",
+            "name": "FirewallResources",
+            "label": "Show Resources",
+            "type": 2,
+            "description": "The is only used on the Overview page.",
+            "typeSettings": {
+              "additionalResourceOptions": [],
+              "showDefault": false
+            },
+            "jsonData": "[\r\n { \"value\": \"Yes\", \"label\": \"Yes\", \"selected\":true},\r\n {\"value\": \"No\", \"label\": \"No\" }\r\n]",
+            "value": "No"
+          },
+          {
+            "id": "53aa8daf-29de-40a1-9147-c0970e32fac4",
+            "version": "KqlParameterItem/1.0",
+            "name": "GeoLocation",
+            "label": "GeoLocationCSV",
+            "type": 2,
+            "description": "Supplied as a value for GeoLocation lookup on queries: Read more here - https://docs.microsoft.com/azure/data-explorer/kusto/query/ipv4-lookup-plugin#ipv4-lookup---matching-rows-only",
+            "typeSettings": {
+              "additionalResourceOptions": [],
+              "showDefault": false
+            },
+            "jsonData": "\r\n[\r\n{\r\n\"value\": \"https://raw.githubusercontent.com/datasets/geoip2-ipv4/master/data/geoip2-ipv4.csv\", \"label\": \"GeoLocationDefault\", \"selected\": \"true\"  \r\n}\r\n]\r\n\r\n"
+          }
+        ],
+        "style": "pills",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces"
+      },
+      "conditionalVisibility": {
+        "parameterName": "selectedTab",
+        "comparison": "isEqualTo",
+        "value": "AzureFirewall"
+      },
+      "name": "parameters - 1"
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "AzureDiagnostics\r\n| where ResourceType == \"AZUREFIREWALLS\"\r\n| where Resource in~ (split(\"{Resource:label}\", \", \"))\r\n| where OperationName == \"AzureFirewallIDSLog\"\r\n| parse msg_s with Protocol \" request from \" SourceIP \":\" SourcePort \" to \" DestIP \":\" DestPort \". Action: \" Action \". Signature: \" SignatureID \". IDS:\" Message \". Priority:\" Priority \". Classification:\" Classification\r\n| project TimeGenerated, Protocol, SourceIP, SourcePort, DestIP, DestPort, Action, SignatureID, Message\r\n| summarize count() by Action",
+        "size": 2,
+        "title": "IDPS Actions Count, filterable by Action",
+        "noDataMessage": "This feature is in Azure Firewall Premium; For more information go to https://docs.microsoft.com/azure/firewall/premium-features",
+        "noDataMessageStyle": 2,
+        "timeContextFromParameter": "TimeRange",
+        "exportFieldName": "series",
+        "exportParameterName": "IDSIPSAction",
+        "exportDefaultValue": "*",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces",
+        "crossComponentResources": [
+          "{Workspaces}"
+        ],
+        "visualization": "piechart"
+      },
+      "conditionalVisibility": {
+        "parameterName": "selectedTab",
+        "comparison": "isEqualTo",
+        "value": "AzureFirewall"
+      },
+      "customWidth": "25",
+      "name": "query - 44"
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "AzureDiagnostics\r\n| where ResourceType == \"AZUREFIREWALLS\"\r\n| where Resource in~ (split(\"{Resource:label}\", \", \"))\r\n| where OperationName == \"AzureFirewallIDSLog\"\r\n| parse msg_s with Protocol \" request from \" SourceIP \":\" SourcePort \" to \" DestIP \":\" DestPort \". Action: \" Action \". Signature: \" SignatureID \". IDS:\" Message \". Priority:\" Priority \". Classification:\" Classification\r\n| project TimeGenerated, Protocol, SourceIP, SourcePort, DestIP, DestPort, Action, SignatureID, Message\r\n| where '{IDSIPSAction}' == Action or '{IDSIPSAction}' == \"*\"\r\n| summarize count() by Protocol",
+        "size": 2,
+        "title": "IDPS Protocol Count, filterable by Protocol",
+        "noDataMessage": "This feature is in Azure Firewall Premium; For more information go to https://docs.microsoft.com/azure/firewall/premium-features",
+        "timeContextFromParameter": "TimeRange",
+        "exportFieldName": "series",
+        "exportParameterName": "IDSIPSProtocol",
+        "exportDefaultValue": "*",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces",
+        "crossComponentResources": [
+          "{Workspaces}"
+        ],
+        "visualization": "piechart"
+      },
+      "conditionalVisibility": {
+        "parameterName": "selectedTab",
+        "comparison": "isEqualTo",
+        "value": "AzureFirewall"
+      },
+      "customWidth": "25",
+      "name": "query - 45"
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "AzureDiagnostics\r\n| where ResourceType == \"AZUREFIREWALLS\"\r\n| where Resource in~ (split(\"{Resource:label}\", \", \"))\r\n| where OperationName == \"AzureFirewallIDSLog\"\r\n| parse msg_s with Protocol \" request from \" SourceIP \":\" SourcePort \" to \" DestIP \":\" DestPort \". Action: \" Action \". Signature: \" SignatureID \". IDS:\" Message \". Priority:\" Priority \". Classification:\" Classification\r\n| project TimeGenerated, Protocol, SourceIP, SourcePort, DestIP, DestPort, Action, SignatureID, Message\r\n| where '{IDSIPSAction}' == Action or '{IDSIPSAction}' == \"*\"\r\n| where '{IDSIPSProtocol}' == Protocol or '{IDSIPSProtocol}' == \"*\"\r\n| summarize count() by SignatureID\r\n",
+        "size": 2,
+        "title": "IDPS SignatureID Count, filterable by SignatureID",
+        "noDataMessage": "This feature is in Azure Firewall Premium; For more information go to https://docs.microsoft.com/azure/firewall/premium-features",
+        "timeContextFromParameter": "TimeRange",
+        "exportFieldName": "series",
+        "exportParameterName": "IDSIPSSignatureID",
+        "exportDefaultValue": "*",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces",
+        "crossComponentResources": [
+          "{Workspaces}"
+        ],
+        "visualization": "piechart"
+      },
+      "conditionalVisibility": {
+        "parameterName": "selectedTab",
+        "comparison": "isEqualTo",
+        "value": "AzureFirewall"
+      },
+      "customWidth": "25",
+      "name": "query - 45 - Copy"
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "AzureDiagnostics\r\n| where ResourceType == \"AZUREFIREWALLS\"\r\n| where Resource in~ (split(\"{Resource:label}\", \", \"))\r\n| where OperationName == \"AzureFirewallIDSLog\"\r\n| parse msg_s with Protocol \" request from \" SourceIP \":\" SourcePort \" to \" DestIP \":\" DestPort \". Action: \" Action \". Signature: \" SignatureID \". IDS:\" Message \". Priority:\" Priority \". Classification:\" Classification\r\n| project TimeGenerated, Protocol, SourceIP, SourcePort, DestIP, DestPort, Action, SignatureID, Message\r\n| where '{IDSIPSAction}' == Action or '{IDSIPSAction}' == \"*\"\r\n| where '{IDSIPSProtocol}' == Protocol or '{IDSIPSProtocol}' == \"*\"\r\n| where '{IDSIPSSignatureID}' == SignatureID or '{IDSIPSSignatureID}' == \"*\"\r\n| summarize count() by SourceIP, DestIP\r\n| sort by count_ desc",
+        "size": 2,
+        "title": "IDPS SourceIP Count, filterable by SourceIP",
+        "noDataMessage": "This feature is in Azure Firewall Premium; For more information go to https://docs.microsoft.com/azure/firewall/premium-features",
+        "timeContextFromParameter": "TimeRange",
+        "exportFieldName": "series",
+        "exportParameterName": "IDSIPSSourceIP",
+        "exportDefaultValue": "*",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces",
+        "crossComponentResources": [
+          "{Workspaces}"
+        ],
+        "visualization": "piechart",
+        "gridSettings": {
+          "formatters": [
+            {
+              "columnMatch": "SourceIP",
+              "formatter": 5
+            }
+          ],
+          "hierarchySettings": {
+            "treeType": 1,
+            "groupBy": [
+              "SourceIP"
+            ],
+            "expandTopLevel": false
+          }
+        }
+      },
+      "conditionalVisibility": {
+        "parameterName": "selectedTab",
+        "comparison": "isEqualTo",
+        "value": "AzureFirewall"
+      },
+      "customWidth": "25",
+      "name": "query - 45 - Copy - Copy"
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "AzureDiagnostics\r\n| where ResourceType == \"AZUREFIREWALLS\"\r\n| where Resource in~ (split(\"{Resource:label}\", \", \"))\r\n| where OperationName == \"AzureFirewallIDSLog\"\r\n| parse msg_s with Protocol \" request from \" SourceIP \":\" SourcePort \" to \" DestIP \":\" DestPort \". Action: \" Action \". Signature: \" SignatureID \". IDS:\" Message \". Priority:\" Priority \". Classification:\" Classification\r\n//| project-away Category, ResourceId, msg_s, SubscriptionId, ResourceProvider, ResourceType, OperationName, Type\r\n| project TimeGenerated, Protocol, SourceIP, SourcePort, DestIP, DestPort, Action, SignatureID, Message\r\n| where '{IDSIPSAction}' == Action or '{IDSIPSAction}' == \"*\"\r\n| where '{IDSIPSProtocol}' == Protocol or '{IDSIPSProtocol}' == \"*\"\r\n| where '{IDSIPSSignatureID}' == SignatureID or '{IDSIPSSignatureID}' == \"*\"\r\n| where '{IDSIPSSourceIP}' == SourceIP or '{IDSIPSSourceIP}' == \"*\"\r\n| summarize count() by Action",
+        "size": 0,
+        "title": "Filtered IDPS Actions by Count",
+        "noDataMessage": "This feature is in Azure Firewall Premium; For more information go to https://docs.microsoft.com/azure/firewall/premium-features",
+        "timeContextFromParameter": "TimeRange",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces",
+        "crossComponentResources": [
+          "{Workspaces}"
+        ],
+        "gridSettings": {
+          "formatters": [
+            {
+              "columnMatch": "count_",
+              "formatter": 8,
+              "formatOptions": {
+                "palette": "whiteBlack"
+              }
+            }
+          ]
+        }
+      },
+      "conditionalVisibility": {
+        "parameterName": "selectedTab",
+        "comparison": "isEqualTo",
+        "value": "AzureFirewall"
+      },
+      "customWidth": "25",
+      "name": "query - 44 - Copy"
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "AzureDiagnostics\r\n| where ResourceType == \"AZUREFIREWALLS\"\r\n| where Resource in~ (split(\"{Resource:label}\", \", \"))\r\n| where OperationName == \"AzureFirewallIDSLog\"\r\n| parse msg_s with Protocol \" request from \" SourceIP \":\" SourcePort \" to \" DestIP \":\" DestPort \". Action: \" Action \". Signature: \" SignatureID \". IDS:\" Message \". Priority:\" Priority \". Classification:\" Classification\r\n//| project-away Category, ResourceId, msg_s, SubscriptionId, ResourceProvider, ResourceType, OperationName, Type\r\n| project TimeGenerated, Protocol, SourceIP, SourcePort, DestIP, DestPort, Action, SignatureID, Message\r\n| where '{IDSIPSAction}' == Action or '{IDSIPSAction}' == \"*\"\r\n| where '{IDSIPSProtocol}' == Protocol or '{IDSIPSProtocol}' == \"*\"\r\n| where '{IDSIPSSignatureID}' == SignatureID or '{IDSIPSSignatureID}' == \"*\"\r\n| where '{IDSIPSSourceIP}' == SourceIP or '{IDSIPSSourceIP}' == \"*\"\r\n| summarize count() by Protocol",
+        "size": 0,
+        "title": "Filtered IDPS Protocols by Count",
+        "noDataMessage": "This feature is in Azure Firewall Premium; For more information go to https://docs.microsoft.com/azure/firewall/premium-features",
+        "timeContextFromParameter": "TimeRange",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces",
+        "crossComponentResources": [
+          "{Workspaces}"
+        ],
+        "gridSettings": {
+          "formatters": [
+            {
+              "columnMatch": "count_",
+              "formatter": 8,
+              "formatOptions": {
+                "palette": "whiteBlack"
+              }
+            }
+          ]
+        }
+      },
+      "conditionalVisibility": {
+        "parameterName": "selectedTab",
+        "comparison": "isEqualTo",
+        "value": "AzureFirewall"
+      },
+      "customWidth": "25",
+      "name": "query - 45 - Copy"
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "AzureDiagnostics\r\n| where ResourceType == \"AZUREFIREWALLS\"\r\n| where Resource in~ (split(\"{Resource:label}\", \", \"))\r\n| where OperationName == \"AzureFirewallIDSLog\"\r\n| parse msg_s with Protocol \" request from \" SourceIP \":\" SourcePort \" to \" DestIP \":\" DestPort \". Action: \" Action \". Signature: \" SignatureID \". IDS:\" Message \". Priority:\" Priority \". Classification:\" Classification\r\n//| project-away Category, ResourceId, msg_s, SubscriptionId, ResourceProvider, ResourceType, OperationName, Type\r\n| project TimeGenerated, Protocol, SourceIP, SourcePort, DestIP, DestPort, Action, SignatureID, Message\r\n| where '{IDSIPSAction}' == Action or '{IDSIPSAction}' == \"*\"\r\n| where '{IDSIPSProtocol}' == Protocol or '{IDSIPSProtocol}' == \"*\"\r\n| where '{IDSIPSSignatureID}' == SignatureID or '{IDSIPSSignatureID}' == \"*\"\r\n| where '{IDSIPSSourceIP}' == SourceIP or '{IDSIPSSourceIP}' == \"*\"\r\n| summarize count() by SignatureID",
+        "size": 0,
+        "title": "Filtered IDPS SignatureIDs by Count",
+        "noDataMessage": "This feature is in Azure Firewall Premium; For more information go to https://docs.microsoft.com/azure/firewall/premium-features",
+        "timeContextFromParameter": "TimeRange",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces",
+        "crossComponentResources": [
+          "{Workspaces}"
+        ],
+        "gridSettings": {
+          "formatters": [
+            {
+              "columnMatch": "count_",
+              "formatter": 8,
+              "formatOptions": {
+                "palette": "whiteBlack"
+              }
+            }
+          ]
+        }
+      },
+      "conditionalVisibility": {
+        "parameterName": "selectedTab",
+        "comparison": "isEqualTo",
+        "value": "AzureFirewall"
+      },
+      "customWidth": "25",
+      "name": "query - 45 - Copy - Copy"
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "AzureDiagnostics\r\n| where ResourceType == \"AZUREFIREWALLS\"\r\n| where Resource in~ (split(\"{Resource:label}\", \", \"))\r\n| where OperationName == \"AzureFirewallIDSLog\"\r\n| parse msg_s with Protocol \" request from \" SourceIP \":\" SourcePort \" to \" DestIP \":\" DestPort \". Action: \" Action \". Signature: \" SignatureID \". IDS:\" Message \". Priority:\" Priority \". Classification:\" Classification\r\n| project TimeGenerated, Protocol, SourceIP, SourcePort, DestIP, DestPort, Action, SignatureID, Message\r\n| where '{IDSIPSAction}' == Action or '{IDSIPSAction}' == \"*\"\r\n| where '{IDSIPSProtocol}' == Protocol or '{IDSIPSProtocol}' == \"*\"\r\n| where '{IDSIPSSignatureID}' == SignatureID or '{IDSIPSSignatureID}' == \"*\"\r\n| where '{IDSIPSSourceIP}' == SourceIP or '{IDSIPSSourceIP}' == \"*\"\r\n| summarize Volume=count() by DestIP, SourceIP\r\n| sort by Volume desc",
+        "size": 0,
+        "title": "Filtered SourceIP, filterable by DestIP",
+        "noDataMessage": "This feature is in Azure Firewall Premium; For more information go to https://docs.microsoft.com/azure/firewall/premium-features",
+        "timeContextFromParameter": "TimeRange",
+        "exportFieldName": "DestIP",
+        "exportParameterName": "IDSIPSDestIP",
+        "exportDefaultValue": "*",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces",
+        "crossComponentResources": [
+          "{Workspaces}"
+        ],
+        "visualization": "table",
+        "gridSettings": {
+          "formatters": [
+            {
+              "columnMatch": "SourceIP",
+              "formatter": 5
+            },
+            {
+              "columnMatch": "Volume",
+              "formatter": 8,
+              "formatOptions": {
+                "palette": "whiteBlack"
+              }
+            }
+          ],
+          "hierarchySettings": {
+            "treeType": 1,
+            "groupBy": [
+              "SourceIP"
+            ],
+            "expandTopLevel": false
+          }
+        },
+        "tileSettings": {
+          "showBorder": false,
+          "titleContent": {
+            "columnMatch": "SourceIP",
+            "formatter": 1
+          },
+          "leftContent": {
+            "columnMatch": "Volume",
+            "formatter": 12,
+            "formatOptions": {
+              "palette": "auto"
+            },
+            "numberFormat": {
+              "unit": 17,
+              "options": {
+                "maximumSignificantDigits": 3,
+                "maximumFractionDigits": 2
+              }
+            }
+          }
+        },
+        "graphSettings": {
+          "type": 0,
+          "topContent": {
+            "columnMatch": "SourceIP",
+            "formatter": 1
+          },
+          "centerContent": {
+            "columnMatch": "Volume",
+            "formatter": 1,
+            "numberFormat": {
+              "unit": 17,
+              "options": {
+                "maximumSignificantDigits": 3,
+                "maximumFractionDigits": 2
+              }
+            }
+          }
+        }
+      },
+      "conditionalVisibility": {
+        "parameterName": "selectedTab",
+        "comparison": "isEqualTo",
+        "value": "AzureFirewall"
+      },
+      "customWidth": "25",
+      "name": "query - 45 - Copy - Copy - Copy"
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "AzureDiagnostics\r\n| where ResourceType == \"AZUREFIREWALLS\"\r\n| where OperationName == \"AzureFirewallIDSLog\"\r\n| where Resource in~ (split(\"{Resource:label}\", \", \"))\r\n| parse msg_s with Protocol \" request from \" SourceIP \":\" SourcePort \" to \" DestIP \":\" DestPort \". Action: \" Action \". Signature: \" SignatureID \". IDS:\" Message \". Priority:\" Priority \". Classification:\" Classification\r\n| project TimeGenerated, Protocol, SourceIP, SourcePort, DestIP, DestPort, Action, SignatureID, Message, Resource\r\n| where '{IDSIPSAction}' == Action or '{IDSIPSAction}' == \"*\"\r\n| where '{IDSIPSProtocol}' == Protocol or '{IDSIPSProtocol}' == \"*\"\r\n| where '{IDSIPSSignatureID}' == SignatureID or '{IDSIPSSignatureID}' == \"*\"\r\n| where '{IDSIPSSourceIP}' == SourceIP or '{IDSIPSSourceIP}' == \"*\"\r\n| where '{IDSIPSDestIP}' == DestIP or '{IDSIPSDestIP}' == \"*\"\r\n| summarize count() by Resource, bin(TimeGenerated,{TimeRange:grain})",
+        "size": 0,
+        "title": "Azure Firewall IDPS count over time",
+        "noDataMessage": "This feature is in Azure Firewall Premium; For more information go to https://docs.microsoft.com/azure/firewall/premium-features",
+        "timeContextFromParameter": "TimeRange",
+        "timeBrushParameterName": "AzureFirewallBrush",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces",
+        "crossComponentResources": [
+          "{Workspaces}"
+        ],
+        "visualization": "timechart",
+        "gridSettings": {
+          "formatters": [
+            {
+              "columnMatch": "SourceIP",
+              "formatter": 5
+            }
+          ],
+          "hierarchySettings": {
+            "treeType": 1,
+            "groupBy": [
+              "SourceIP"
+            ],
+            "expandTopLevel": false
+          }
+        }
+      },
+      "conditionalVisibility": {
+        "parameterName": "selectedTab",
+        "comparison": "isEqualTo",
+        "value": "AzureFirewall"
+      },
+      "name": "query - 45"
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "let materializedData =\r\nmaterialize(\r\nAzureDiagnostics\r\n| where Category == \"AzureFirewallApplicationRule\"\r\n| where Resource in~ (split(\"{Resource:label}\", \", \"))\r\n| project ResourceId,ResourceGroup,SubscriptionId, msg_s, Resource, TimeGenerated);\r\nunion\r\n(\r\nmaterializedData\r\n| where msg_s has \"Web Category:\" and msg_s has \". Url\"\r\n| parse msg_s with Protocol \" request from \" SourceIP \":\" SourcePort \" to \" FQDN \":\" DestinationPort \". Url:\" Url \". Action: \" Action \". Rule Collection:\" RuleCollection \". Rule:\" Rule \". Web Category:\" WebCategory\r\n),\r\n(\r\nmaterializedData\r\n| where msg_s !has \"Web Category:\" and msg_s has \". Url\" and msg_s has \". No rule matched\"\r\n| parse msg_s with Protocol \" request from \" SourceIP \":\" SourcePort \" to \" FQDN \":\" DestinationPort \". Url:\" Url \". Action: \" Action \". No rule matched\" *\r\n),\r\n(\r\nmaterializedData\r\n| where msg_s !has \"Web Category:\" and msg_s !has \". Url\" and msg_s has \". No rule matched\"\r\n| parse msg_s with Protocol \" request from \" SourceIP \":\" SourcePort \" to \" FQDN \":\" DestinationPort \". Action: \" Action \". No rule matched\" *\r\n),\r\n(\r\nmaterializedData\r\n| where msg_s has \"Web Category:\" and msg_s !has \". Url\"\r\n| parse msg_s with Protocol \" request from \" SourceIP \":\" SourcePort \" to \" FQDN \":\" DestinationPort \". Action: \" Action \". Rule Collection:\" RuleCollection \". Rule:\" Rule \". Web Category:\" WebCategory\r\n),\r\n(\r\nmaterializedData\r\n| where msg_s !has \"Web Category:\" and  msg_s !has \". Url\" and msg_s !has \"Rule Collection\" and msg_s !has \" Reason: \"\r\n| parse msg_s with Protocol \" request from \" SourceIP \":\" SourcePort \" to \" FQDN \":\" DestinationPort \". Action: \" Action \". \" RuleCollection \". \" Rule\r\n),\r\n(\r\nmaterializedData\r\n| where msg_s !has \"Web Category:\" and  msg_s !has \". Url\" and msg_s !has \"Rule Collection\" and msg_s !has \"TLS extension was missing\"\r\n| where msg_s has \" Reason:\"\r\n| parse msg_s with Protocol \" request from \" SourceIP \":\" SourcePort \". Action: \" Action \". Reason: \" Rule \".\"\r\n),\r\n(\r\nmaterializedData\r\n| where msg_s !has \"Web Category:\" and  msg_s !has \". Url\" and msg_s !has  \"TLS extension was missing\" and msg_s !has \"No rule matched\"\r\n| parse msg_s with Protocol \" request from \" SourceIP \":\" SourcePort \" to \" FQDN \":\" DestinationPort \". Action: \" Action \". Rule Collection: \" RuleCollection \". Rule: \" Rule\r\n),\r\n(\r\nmaterializedData\r\n| where msg_s !has \"Web Category:\" and  msg_s !has \". Url\" and msg_s !has \"Rule Collection\" and msg_s !has \" Reason: \"\r\n| where msg_s has \"Rule Collection Group\"\r\n| parse msg_s with Protocol \" request from \" SourceIP \":\" SourcePort \" to \" FQDN \":\" DestinationPort \". Action: \" Action \". Policy:\" Policy \". Rule Collection Group:\" RuleCollectionGroup \". Rule Collection: \" RuleCollection \". Rule: \" Rule\r\n)\r\n| where SourceIP <> \"\"\r\n| where FQDN == \"{FullName:label}\" or '{FullName}' == \"*\"\r\n| summarize count() by SourceIP, SubscriptionId\r\n| sort by count_",
+        "size": 0,
+        "title": "SourceIP Address, filterable: Query Time({$queryTime})",
+        "timeContextFromParameter": "TimeRange",
+        "exportedParameters": [
+          {
+            "fieldName": "SourceIP",
+            "parameterName": "InvestigateIP",
+            "parameterType": 1,
+            "defaultValue": "privateIPAddress"
+          },
+          {
+            "fieldName": "SourceIP",
+            "parameterName": "InvestigateIPWC",
+            "parameterType": 1,
+            "defaultValue": "*"
+          },
+          {
+            "fieldName": "SubscriptionId",
+            "parameterName": "SelectedSubscriptionId",
+            "parameterType": 1,
+            "defaultValue": "-"
+          }
+        ],
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces",
+        "crossComponentResources": [
+          "{Workspaces}"
+        ],
+        "gridSettings": {
+          "formatters": [
+            {
+              "columnMatch": "SubscriptionId",
+              "formatter": 5
+            },
+            {
+              "columnMatch": "count_",
+              "formatter": 8,
+              "formatOptions": {
+                "palette": "whiteBlack"
+              },
+              "numberFormat": {
+                "unit": 17,
+                "options": {
+                  "style": "decimal",
+                  "useGrouping": false,
+                  "maximumSignificantDigits": 4
+                }
+              }
+            }
+          ],
+          "filter": true
+        },
+        "tileSettings": {
+          "titleContent": {
+            "columnMatch": "SourceIP",
+            "formatter": 4,
+            "formatOptions": {
+              "palette": "orange"
+            },
+            "numberFormat": {
+              "unit": 0,
+              "options": {
+                "style": "decimal",
+                "useGrouping": false
+              }
+            }
+          },
+          "showBorder": true,
+          "size": "auto"
+        }
+      },
+      "conditionalVisibility": {
+        "parameterName": "selectedTab",
+        "comparison": "isEqualTo",
+        "value": "AzureFirewall"
+      },
+      "customWidth": "15",
+      "name": "query - 33"
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "Resources\r\n| where type =~ 'microsoft.network/networkinterfaces'\r\n| where properties contains \"{InvestigateIP}\"\r\n| extend NSG = properties['networkSecurityGroup']['id']\r\n| parse NSG with \"/subscriptions/\" NetworkSecurityGroup_Sub \"/resourceGroups/\" NetworkSecurityGroup_rg \"/providers/Microsoft.Network/networkSecurityGroups/\" NetworkSecurityGroup_Name\r\n| project id, PrivateIPAddress = tostring(properties['ipConfigurations'][0]['properties']['privateIPAddress']),  PublicIPAddress = tostring(properties['ipConfigurations'][0]['properties']['publicIPAddress']['id']), VirtualMachine = tostring(properties['virtualMachine']['id']), subnet = tostring(properties['ipConfigurations'][0]['properties']['subnet']['id']), NetworkSecurityGroup = NetworkSecurityGroup_Name, properties, subscriptionId, tenantId",
+        "size": 0,
+        "title": "SourceIPAddress Resource Lookup: Query Time({$queryTime}) : Total Rows({$rowCount})",
+        "exportFieldName": "id",
+        "exportParameterName": "Testid",
+        "exportDefaultValue": "*",
+        "queryType": 1,
+        "resourceType": "microsoft.resourcegraph/resources",
+        "crossComponentResources": [
+          "value::selected"
+        ],
+        "gridSettings": {
+          "formatters": [
+            {
+              "columnMatch": "properties",
+              "formatter": 5
+            }
+          ],
+          "filter": true
+        },
+        "tileSettings": {
+          "titleContent": {
+            "columnMatch": "SourceIP",
+            "formatter": 4,
+            "formatOptions": {
+              "palette": "orange"
+            },
+            "numberFormat": {
+              "unit": 0,
+              "options": {
+                "style": "decimal",
+                "useGrouping": false
+              }
+            }
+          },
+          "showBorder": true,
+          "size": "auto"
+        }
+      },
+      "conditionalVisibility": {
+        "parameterName": "selectedTab",
+        "comparison": "isEqualTo",
+        "value": "AzureFirewall"
+      },
+      "customWidth": "50",
+      "name": "query - 33 - Copy"
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "let materializedData =\r\nmaterialize(\r\nAzureDiagnostics\r\n| where Category == \"AzureFirewallNetworkRule\"\r\n| where OperationName == \"AzureFirewallThreatIntelLog\"\r\n| where Resource in~ (split(\"{Resource:label}\", \", \"))\r\n| where msg_s contains \"{InvestigateIPWC:label}\" or '{InvestigateIPWC}' == \"*\"\r\n| where msg_s <> \" request from  to . Action: . ThreatIntel: \"\r\n| project msg_s, Resource, TimeGenerated,ResourceId , ResourceGroup , SubscriptionId);\r\nunion\r\n(\r\nmaterializedData\r\n| where msg_s has \"Url\"\r\n| parse msg_s with Protocol \" request from \" SourceIP \":\" SourcePort \" to \" FQDN \":\" DestinationPort \". Url: \" Url \". Action: \" Action \". ThreatIntel: \" ThreatIntelMsg\r\n),\r\n(\r\nmaterializedData\r\n| where msg_s !has \"Url\"\r\n| parse msg_s with Protocol \" request from \" SourceIP \":\" SourcePort \" to \" FQDN \":\" DestinationPort \". Action: \" Action \". ThreatIntel: \" ThreatIntelMsg\r\n)\r\n| summarize by TimeGenerated, Protocol, SourceIP, SourcePort, FQDN, DestinationPort, Url, Action, ThreatIntelMsg",
+        "size": 0,
+        "title": "Azure Firewall Threat Intel: Query Time({$queryTime}) : Total Rows({$rowCount})",
+        "noDataMessage": "There is no Azure Firewall Threat Intel for your filtered results",
+        "timeContextFromParameter": "TimeRange",
+        "showExportToExcel": true,
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces",
+        "crossComponentResources": [
+          "{Workspaces}"
+        ],
+        "gridSettings": {
+          "rowLimit": 2000,
+          "filter": true
+        }
+      },
+      "conditionalVisibility": {
+        "parameterName": "selectedTab",
+        "comparison": "isEqualTo",
+        "value": "AzureFirewall"
+      },
+      "name": "query - 29"
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "//reference list posted here : https://docs.microsoft.com/azure/data-explorer/kusto/query/ipv4-lookup-plugin\r\nlet geoData = externaldata\r\n(network:string,geoname_id:string,continent_code:string,continent_name:string,\r\ncountry_iso_code:string,country_name:string,is_anonymous_proxy:string,is_satellite_provider:string)\r\n[@\"{GeoLocation}\"] with (ignoreFirstRecord=true, format=\"csv\");\r\nAzureDiagnostics\r\n| where ResourceType == \"AZUREFIREWALLS\"\r\n| where OperationName == \"AzureFirewallIDSLog\"\r\n| where Resource in~ (split(\"{Resource:label}\", \", \"))\r\n| where msg_s contains \"{InvestigateIPWC:label}\" or '{InvestigateIPWC}' == \"*\"\r\n| parse msg_s with Protocol \" request from \" SourceIP \":\" SourcePort \" to \" DestIP \":\" DestPort \". Action: \" Action \". Signature: \" SignatureID \". IDS:\" Message \". Priority:\" Priority \". Classification:\" Classification\r\n| summarize by TimeGenerated, SignatureID, Message, Priority, Classification, Protocol, SourceIP, SourcePort, DestIP, DestPort, Action, Resource\r\n| evaluate ipv4_lookup (geoData, DestIP,  network, false)\r\n",
+        "size": 0,
+        "title": "Azure Firewall Premium with GeoLocation- IDPS: Query Time({$queryTime}) : Total Rows({$rowCount})",
+        "timeContextFromParameter": "TimeRange",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces",
+        "crossComponentResources": [
+          "{Workspaces}"
+        ],
+        "gridSettings": {
+          "formatters": [
+            {
+              "columnMatch": "$gen_group",
+              "formatter": 0,
+              "formatOptions": {
+                "customColumnWidthSetting": "60ch"
+              }
+            },
+            {
+              "columnMatch": "Message",
+              "formatter": 5
+            },
+            {
+              "columnMatch": "country_name",
+              "formatter": 5
+            },
+            {
+              "columnMatch": "$gen_group",
+              "formatter": 0,
+              "formatOptions": {
+                "customColumnWidthSetting": "60ch"
+              }
+            }
+          ],
+          "hierarchySettings": {
+            "treeType": 1,
+            "groupBy": [
+              "Message",
+              "country_name"
+            ],
+            "expandTopLevel": true
+          }
+        }
+      },
+      "conditionalVisibility": {
+        "parameterName": "selectedTab",
+        "comparison": "isEqualTo",
+        "value": "AzureFirewall"
+      },
+      "name": "query - 58"
+    },
+    {
+      "type": 9,
+      "content": {
+        "version": "KqlParameterItem/1.0",
+        "crossComponentResources": [
+          "value::selected"
+        ],
+        "parameters": [
+          {
+            "id": "3218e2b0-1bcc-46d4-affa-d298e0cf90f6",
+            "version": "KqlParameterItem/1.0",
+            "name": "DefaultSubscription_Internal",
+            "type": 1,
+            "isRequired": true,
+            "query": "where type =~ 'microsoft.operationalinsights/workspaces'\r\n| take 1\r\n| project subscriptionId",
+            "crossComponentResources": [
+              "value::selected"
+            ],
+            "isHiddenWhenLocked": true,
+            "queryType": 1,
+            "resourceType": "microsoft.resourcegraph/resources"
+          },
+          {
+            "id": "e6ded9a1-a83c-4762-938d-5bf8ff3d3d38",
+            "version": "KqlParameterItem/1.0",
+            "name": "Subscription",
+            "type": 6,
+            "isRequired": true,
+            "query": "summarize by subscriptionId\r\n| project value = strcat(\"/subscriptions/\", subscriptionId), label = subscriptionId, selected = iff(subscriptionId =~ '{DefaultSubscription_Internal}', true, false)",
+            "crossComponentResources": [
+              "value::selected"
+            ],
+            "typeSettings": {
+              "additionalResourceOptions": []
+            },
+            "queryType": 1,
+            "resourceType": "microsoft.resourcegraph/resources"
+          }
+        ],
+        "style": "above",
+        "queryType": 1,
+        "resourceType": "microsoft.resourcegraph/resources"
+      },
+      "conditionalVisibility": {
+        "parameterName": "selectedTab",
+        "comparison": "isEqualTo",
+        "value": "DFC"
+      },
+      "customWidth": "33",
+      "name": "parameters - 10"
+    },
+    {
+      "type": 9,
+      "content": {
+        "version": "KqlParameterItem/1.0",
+        "parameters": [
+          {
+            "id": "6d2d5f84-767c-4d51-82d5-6981e96bacdc",
+            "version": "KqlParameterItem/1.0",
+            "name": "Workspace",
+            "type": 5,
+            "query": "resources\r\n| where type =~ 'microsoft.operationalinsights/workspaces'\r\n| order by name asc\r\n| summarize Selected = makelist(id, 10), All = makelist(id, 1000)\r\n| mvexpand All limit 100\r\n| project value = tostring(All), label = tostring(All), selected = iff(Selected contains All, true, false)",
+            "crossComponentResources": [
+              "{Subscription}"
+            ],
+            "typeSettings": {
+              "additionalResourceOptions": []
+            },
+            "queryType": 1,
+            "resourceType": "microsoft.resourcegraph/resources"
+          },
+          {
+            "id": "befbf593-c171-4129-b890-7e642265ed0c",
+            "version": "KqlParameterItem/1.0",
+            "name": "TimeRange",
+            "type": 4,
+            "isRequired": true,
+            "value": {
+              "durationMs": 7776000000
+            },
+            "typeSettings": {
+              "selectableValues": [
+                {
+                  "durationMs": 300000
+                },
+                {
+                  "durationMs": 900000
+                },
+                {
+                  "durationMs": 1800000
+                },
+                {
+                  "durationMs": 3600000
+                },
+                {
+                  "durationMs": 14400000
+                },
+                {
+                  "durationMs": 43200000
+                },
+                {
+                  "durationMs": 86400000
+                },
+                {
+                  "durationMs": 172800000
+                },
+                {
+                  "durationMs": 259200000
+                },
+                {
+                  "durationMs": 604800000
+                },
+                {
+                  "durationMs": 1209600000
+                },
+                {
+                  "durationMs": 2419200000
+                },
+                {
+                  "durationMs": 2592000000
+                },
+                {
+                  "durationMs": 5184000000
+                },
+                {
+                  "durationMs": 7776000000
+                }
+              ]
+            }
+          }
+        ],
+        "style": "above",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces"
+      },
+      "conditionalVisibility": {
+        "parameterName": "selectedTab",
+        "comparison": "isEqualTo",
+        "value": "DFC"
+      },
+      "customWidth": "50",
+      "name": "parameters - 8"
+    },
+    {
+      "type": 12,
+      "content": {
+        "version": "NotebookGroup/1.0",
+        "groupType": "editable",
+        "items": [
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "SecurityAlert \r\n| summarize AlertCount = count() by AlertSeverity",
+              "size": 1,
+              "title": "Alerts by Severity",
+              "timeContextFromParameter": "TimeRange",
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces",
+              "crossComponentResources": [
+                "{Workspace}"
+              ],
+              "visualization": "piechart"
+            },
+            "customWidth": "50",
+            "name": "query - 0"
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "SecurityAlert \r\n| summarize AlertCount = count() by ProviderName, IsIncident",
+              "size": 1,
+              "title": "Alerts by Provider",
+              "timeContextFromParameter": "TimeRange",
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces",
+              "crossComponentResources": [
+                "{Workspace}"
+              ],
+              "visualization": "piechart"
+            },
+            "customWidth": "50",
+            "name": "query - 9"
+          },
+          {
+            "type": 9,
+            "content": {
+              "version": "KqlParameterItem/1.0",
+              "crossComponentResources": [
+                "{Workspace}"
+              ],
+              "parameters": [
+                {
+                  "id": "43415fb7-83e4-4b71-9e69-59c3acb598e3",
+                  "version": "KqlParameterItem/1.0",
+                  "name": "ProductSelection",
+                  "type": 5,
+                  "isRequired": true,
+                  "multiSelect": true,
+                  "quote": "'",
+                  "delimiter": ",",
+                  "query": "SecurityAlert \r\n| where isnotempty(ProductName)\r\n| summarize count() by  ProductName\r\n| order by count_ desc",
+                  "crossComponentResources": [
+                    "{Workspace}"
+                  ],
+                  "value": [
+                    "value::all"
+                  ],
+                  "typeSettings": {
+                    "additionalResourceOptions": [
+                      "value::all"
+                    ]
+                  },
+                  "timeContext": {
+                    "durationMs": 0
+                  },
+                  "timeContextFromParameter": "TimeRange",
+                  "queryType": 0,
+                  "resourceType": "microsoft.operationalinsights/workspaces"
+                },
+                {
+                  "id": "903503cc-f549-4d2c-bd6e-adebb0d91799",
+                  "version": "KqlParameterItem/1.0",
+                  "name": "SeveritySelect",
+                  "type": 2,
+                  "isRequired": true,
+                  "multiSelect": true,
+                  "quote": "'",
+                  "delimiter": ",",
+                  "query": "SecurityAlert \r\n| where isnotempty(AlertSeverity)\r\n| summarize by AlertSeverity",
+                  "crossComponentResources": [
+                    "{Workspace}"
+                  ],
+                  "value": [
+                    "value::all"
+                  ],
+                  "typeSettings": {
+                    "additionalResourceOptions": [
+                      "value::all"
+                    ]
+                  },
+                  "timeContext": {
+                    "durationMs": 0
+                  },
+                  "timeContextFromParameter": "TimeRange",
+                  "queryType": 0,
+                  "resourceType": "microsoft.operationalinsights/workspaces"
+                }
+              ],
+              "style": "above",
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces"
+            },
+            "customWidth": "30",
+            "name": "parameters - 10"
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "SecurityAlert\r\n| where ProductName in ( {ProductSelection} )\r\n| where AlertSeverity in ({SeveritySelect})\r\n| extend HostName = tostring(parse_json(Entities)[0].HostName) \r\n| summarize AlertCount = count() by AlertSeverity, VendorName, ProductName, SystemAlertId, ResourceId, AlertType, StartTime, EndTime, RemediationSteps, AlertLink",
+              "size": 0,
+              "title": "Alert Details for {TimeRange:label}",
+              "timeContextFromParameter": "TimeRange",
+              "showExportToExcel": true,
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces",
+              "crossComponentResources": [
+                "{Workspace}"
+              ],
+              "visualization": "table",
+              "gridSettings": {
+                "formatters": [
+                  {
+                    "columnMatch": "AlertSeverity",
+                    "formatter": 18,
+                    "formatOptions": {
+                      "showIcon": true,
+                      "thresholdsOptions": "colors",
+                      "thresholdsGrid": [
+                        {
+                          "operator": "==",
+                          "thresholdValue": "High",
+                          "representation": "redBright",
+                          "text": "{0}{1}"
+                        },
+                        {
+                          "operator": "==",
+                          "thresholdValue": "Medium",
+                          "representation": "orange",
+                          "text": "{0}{1}"
+                        },
+                        {
+                          "operator": "==",
+                          "thresholdValue": "Low",
+                          "representation": "blue",
+                          "text": "{0}{1}"
+                        },
+                        {
+                          "operator": "Default",
+                          "thresholdValue": null,
+                          "representation": "blue",
+                          "text": "{0}{1}"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "columnMatch": "AlertLink",
+                    "formatter": 7,
+                    "formatOptions": {
+                      "linkTarget": "GenericDetails",
+                      "linkIsContextBlade": true,
+                      "showIcon": true
+                    }
+                  }
+                ],
+                "filter": true
+              }
+            },
+            "name": "query - 11"
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "SecurityAlert\r\n| make-series count() default=0 on StartTime from {TimeRange:start} to {TimeRange:end} step 1d by ProductName",
+              "size": 0,
+              "title": "Alert Count by Product Over '{TimeRange:label}'",
+              "timeContextFromParameter": "TimeRange",
+              "timeBrushParameterName": "TimeBrush",
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces",
+              "crossComponentResources": [
+                "{Workspace}"
+              ],
+              "visualization": "timechart"
+            },
+            "name": "query - 4"
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "ProtectionStatus\r\n| extend Protection = iff(ThreatStatusRank == 150, \"Protected\", \"Security Event Should Be Addressed\")\r\n| extend Resource = Computer\r\n| project TimeGenerated, Resource, TypeofProtection, Protection, ThreatStatus ,ProtectionStatus, SignatureVersion\r\n| summarize arg_max(TimeGenerated,*) by Resource\r\n",
+              "size": 1,
+              "showAnalytics": true,
+              "title": "Endpoint Protection Status",
+              "timeContextFromParameter": "TimeRange",
+              "exportMultipleValues": true,
+              "exportedParameters": [
+                {
+                  "fieldName": "Resource",
+                  "parameterName": "Resource",
+                  "parameterType": 1,
+                  "delimiter": ""
+                }
+              ],
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces",
+              "crossComponentResources": [
+                "{Workspace}"
+              ],
+              "gridSettings": {
+                "filter": true,
+                "sortBy": [
+                  {
+                    "itemKey": "ThreatStatus",
+                    "sortOrder": 1
+                  }
+                ],
+                "labelSettings": [
+                  {
+                    "columnId": "TimeGenerated",
+                    "label": "Time Generated"
+                  },
+                  {
+                    "columnId": "TypeofProtection",
+                    "label": "Endpoint Protection"
+                  },
+                  {
+                    "columnId": "Protection",
+                    "label": "Protection Status"
+                  },
+                  {
+                    "columnId": "ThreatStatus",
+                    "label": "Threat Status"
+                  },
+                  {
+                    "columnId": "ProtectionStatus",
+                    "label": "Protection Status"
+                  },
+                  {
+                    "columnId": "SignatureVersion",
+                    "label": "Signature Version"
+                  }
+                ]
+              },
+              "sortBy": [
+                {
+                  "itemKey": "ThreatStatus",
+                  "sortOrder": 1
+                }
+              ]
+            },
+            "name": "query - 6"
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "ProtectionStatus\r\n| where ProtectionStatusRank != 150\r\n| extend Protection = case( ProtectionStatusRank == 250, \"Signatures out of date\"\r\n                            , ProtectionStatusRank == 270, \"No real-time protction detected\"\r\n                            , ProtectionStatusRank == 470, \"No endpoint protection detected\"\r\n                            , ProtectionStatusRank == 550, \"Threat detected\"\r\n                            , \"No threats detected\"\r\n                            )\r\n| summarize count() by DeviceName, Protection\r\n| sort by count_ desc ",
+              "size": 0,
+              "title": "Most Vulnerable Machines",
+              "timeContextFromParameter": "TimeRange",
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces",
+              "crossComponentResources": [
+                "{Workspace}"
+              ],
+              "gridSettings": {
+                "filter": true,
+                "labelSettings": [
+                  {
+                    "columnId": "DeviceName",
+                    "label": "Device"
+                  },
+                  {
+                    "columnId": "Protection",
+                    "label": "Endpoint Protection"
+                  },
+                  {
+                    "columnId": "count_",
+                    "label": "Trend Over Last 30 Days"
+                  }
+                ]
+              }
+            },
+            "name": "query - 1"
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "Update\r\n| where UpdateState != 'Installed'\r\n| extend Resource = Computer\r\n| summarize count() by Resource\r\n| sort by count_ desc",
+              "size": 0,
+              "title": "Resources with Updates within '{TimeRange:label}'",
+              "timeContextFromParameter": "TimeRange",
+              "exportMultipleValues": true,
+              "exportedParameters": [
+                {
+                  "fieldName": "Resource",
+                  "parameterName": "Resource",
+                  "parameterType": 1,
+                  "delimiter": ""
+                }
+              ],
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces",
+              "crossComponentResources": [
+                "{Workspace}"
+              ],
+              "gridSettings": {
+                "sortBy": [
+                  {
+                    "itemKey": "Resource",
+                    "sortOrder": 2
+                  }
+                ],
+                "labelSettings": [
+                  {
+                    "columnId": "count_",
+                    "label": "Number of Logs"
+                  }
+                ]
+              },
+              "sortBy": [
+                {
+                  "itemKey": "Resource",
+                  "sortOrder": 2
+                }
+              ]
+            },
+            "customWidth": "25",
+            "name": "query - 8"
+          }
+        ]
+      },
+      "conditionalVisibility": {
+        "parameterName": "selectedTab",
+        "comparison": "isEqualTo",
+        "value": "DFC"
+      },
+      "name": "group - 14"
+    },
+    {
+      "type": 9,
+      "content": {
+        "version": "KqlParameterItem/1.0",
+        "crossComponentResources": [
+          "{Subscription}"
+        ],
+        "parameters": [
+          {
+            "id": "afd56a69-16a5-436d-850e-16c24e839503",
+            "version": "KqlParameterItem/1.0",
+            "name": "DefaultSubscription_Internal",
+            "type": 1,
+            "isRequired": true,
+            "query": "where type =~ 'microsoft.operationalinsights/workspaces'\r\n| take 1\r\n| project subscriptionId",
+            "crossComponentResources": [
+              "value::all"
+            ],
+            "isHiddenWhenLocked": true,
+            "queryType": 1,
+            "resourceType": "microsoft.resourcegraph/resources"
+          },
+          {
+            "id": "e38cad87-ff16-40e6-9384-f6fd24fa9d6b",
+            "version": "KqlParameterItem/1.0",
+            "name": "Subscription",
+            "type": 6,
+            "isRequired": true,
+            "multiSelect": true,
+            "quote": "'",
+            "delimiter": ",",
+            "query": "summarize by subscriptionId\r\n| project value=strcat(\"/subscriptions/\", subscriptionId), label = subscriptionId, selected = iff(subscriptionId =~ '{DefaultSubscription_Internal}', true, false)",
+            "crossComponentResources": [
+              "value::all"
+            ],
+            "typeSettings": {
+              "additionalResourceOptions": [
+                "value::all"
+              ],
+              "showDefault": false
+            },
+            "timeContextFromParameter": "TimeRange",
+            "queryType": 1,
+            "resourceType": "microsoft.resourcegraph/resources"
+          },
+          {
+            "id": "a125fc08-be6d-4b8b-87e2-7e0cd957db47",
+            "version": "KqlParameterItem/1.0",
+            "name": "DefaultWorkspace_Internal",
+            "type": 1,
+            "isRequired": true,
+            "query": "where type =~ 'microsoft.operationalinsights/workspaces'\r\n|take 1\r\n|project id",
+            "crossComponentResources": [
+              "{Subscription}"
+            ],
+            "isHiddenWhenLocked": true,
+            "timeContextFromParameter": "TimeRange",
+            "queryType": 1,
+            "resourceType": "microsoft.resourcegraph/resources"
+          },
+          {
+            "id": "65674a40-2869-4867-a24d-f86f05fd0354",
+            "version": "KqlParameterItem/1.0",
+            "name": "Workspaces",
+            "type": 5,
+            "isRequired": true,
+            "multiSelect": true,
+            "quote": "'",
+            "delimiter": ",",
+            "query": "where type =~ 'microsoft.operationalinsights/workspaces'\r\n| project id, selected = iff(id =~ '{DefaultWorkspace_Internal}', true, false)\r\n",
+            "crossComponentResources": [
+              "value::selected"
+            ],
+            "typeSettings": {
+              "additionalResourceOptions": [
+                "value::all"
+              ],
+              "showDefault": false
+            },
+            "timeContextFromParameter": "TimeRange",
+            "queryType": 1,
+            "resourceType": "microsoft.resourcegraph/resources",
+            "value": [
+              "/subscriptions/<subcriptionID>/resourceGroups/<resourceGroup>/providers/Microsoft.OperationalInsights/workspaces/<LogAnalyticsWorkspace>"
+            ]
+          },
+          {
+            "id": "49e2f511-592f-4d7f-8fda-d686803f3dbf",
+            "version": "KqlParameterItem/1.0",
+            "name": "TimeRange",
+            "label": "Time Range",
+            "type": 4,
+            "isRequired": true,
+            "value": {
+              "durationMs": 7084800000,
+              "endTime": "2022-11-18T03:10:00.000Z"
+            },
+            "typeSettings": {
+              "selectableValues": [
+                {
+                  "durationMs": 300000
+                },
+                {
+                  "durationMs": 900000
+                },
+                {
+                  "durationMs": 1800000
+                },
+                {
+                  "durationMs": 3600000
+                },
+                {
+                  "durationMs": 14400000
+                },
+                {
+                  "durationMs": 43200000
+                },
+                {
+                  "durationMs": 86400000
+                }
+              ],
+              "allowCustom": true
+            }
+          },
+          {
+            "id": "604a42a0-deca-4a95-a15f-8977646a7fac",
+            "version": "KqlParameterItem/1.0",
+            "name": "WAFType",
+            "type": 5,
+            "isRequired": true,
+            "multiSelect": true,
+            "quote": "'",
+            "delimiter": ",",
+            "query": "let FakeData = (datatable (Message:string, ruleName_s:string, clientIp_s:string, clientIP_s:string, action_s:string, transactionId_s:string,trackingReference_s:string) [ \"\", \"\", \"\", \"\", \"\", \"\", \"\" ]);\r\nFakeData | union AzureDiagnostics\r\n| where ResourceType == \"APPLICATIONGATEWAYS\" or ResourceType == \"FRONTDOORS\" or ResourceType == \"PROFILES\" or ResourceType == \"CDNWEBAPPLICATIONFIREWALLPOLICIES\"\r\n| summarize Count=count() by ResourceType\r\n| extend ResourceTypeImproved = iif(ResourceType == \"APPLICATIONGATEWAYS\", \"Application Gateway\", ResourceType)\r\n| extend ResourceTypeImproved = iif(ResourceTypeImproved == \"FRONTDOORS\", \"Azure Front Door\", ResourceTypeImproved)\r\n| extend ResourceTypeImproved = iif(ResourceTypeImproved == \"PROFILES\", \"Azure Front Door Premium\", ResourceTypeImproved)\r\n| extend ResourceTypeImproved = iif(ResourceTypeImproved == \"CDNWEBAPPLICATIONFIREWALLPOLICIES\", \"Azure CDN\", ResourceTypeImproved)\r\n| order by Count desc, ResourceTypeImproved asc\r\n| project ResourceTypeImproved",
+            "crossComponentResources": [
+              "{Workspaces}"
+            ],
+            "value": [
+              "value::all"
+            ],
+            "typeSettings": {
+              "additionalResourceOptions": [
+                "value::all"
+              ]
+            },
+            "timeContext": {
+              "durationMs": 0
+            },
+            "timeContextFromParameter": "TimeRange",
+            "queryType": 0,
+            "resourceType": "microsoft.operationalinsights/workspaces",
+            "label": "WAF Type"
+          },
+          {
+            "id": "d54c1639-d46c-4655-9d76-d5416926a453",
+            "version": "KqlParameterItem/1.0",
+            "name": "WAF",
+            "label": "WAF Items",
+            "type": 2,
+            "isRequired": true,
+            "multiSelect": true,
+            "quote": "'",
+            "delimiter": ",",
+            "query": "let FakeData = (datatable (Message:string, ruleName_s:string, clientIp_s:string, clientIP_s:string, action_s:string, transactionId_s:string,trackingReference_s:string) [ \"\", \"\", \"\", \"\", \"\", \"\", \"\" ]);\r\nFakeData | union AzureDiagnostics\r\n| where (ResourceType == \"APPLICATIONGATEWAYS\" or ResourceType == \"FRONTDOORS\" or ResourceType == \"PROFILES\" or ResourceType == \"CDNWEBAPPLICATIONFIREWALLPOLICIES\") and (\"{WAFType:label}\" == \"All\" or (ResourceType == \"APPLICATIONGATEWAYS\" and \"{WAFType:label}\" contains \"application gateway\") or (ResourceType == \"FRONTDOORS\" and  \"{WAFType:label}\" contains \"azure front door\") or  (ResourceType == \"PROFILES\" and \"{WAFType:label}\" contains \"azure front door premium\") or (ResourceType==\"CDNWEBAPPLICATIONFIREWALLPOLICIES\" and \"{WAFType:label}\" contains \"cdn\"))\r\n| summarize Count=count() by Resource\r\n| order by Count desc, Resource asc\r\n| project Value = Resource, Label = strcat(Resource, \" - \", Count)",
+            "crossComponentResources": [
+              "{Workspaces}"
+            ],
+            "value": [
+              "value::all"
+            ],
+            "typeSettings": {
+              "additionalResourceOptions": [
+                "value::all"
+              ]
+            },
+            "timeContext": {
+              "durationMs": 0
+            },
+            "timeContextFromParameter": "TimeRange",
+            "queryType": 0,
+            "resourceType": "microsoft.operationalinsights/workspaces"
+          }
+        ],
+        "style": "pills",
+        "queryType": 1,
+        "resourceType": "microsoft.resourcegraph/resources"
+      },
+      "conditionalVisibility": {
+        "parameterName": "selectedTab",
+        "comparison": "isEqualTo",
+        "value": "WAF"
+      },
+      "name": "parameters - 2"
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "let FakeData = (datatable (Message:string, ruleName_s:string, clientIp_s:string, clientIP_s:string, action_s:string, transactionId_s:string,trackingReference_s:string) [ \"\", \"\", \"\", \"\", \"\", \"\", \"\" ]);\r\nFakeData | union AzureDiagnostics\r\n| where (ResourceType == \"APPLICATIONGATEWAYS\" or ResourceType == \"FRONTDOORS\" or ResourceType == \"PROFILES\" or ResourceType == \"CDNWEBAPPLICATIONFIREWALLPOLICIES\") and (\"{WAFType:label}\" == \"All\" or (ResourceType == \"APPLICATIONGATEWAYS\" and \"{WAFType:label}\" contains \"application gateway\") or (ResourceType == \"FRONTDOORS\" and  \"{WAFType:label}\" contains \"azure front door\") or (ResourceType == \"PROFILES\" and \"{WAFType:label}\" contains \"azure front door premium\") or (ResourceType==\"CDNWEBAPPLICATIONFIREWALLPOLICIES\" and \"{WAFType:label}\" contains \"cdn\")) and (\"{WAF:label}\" == \"All\" or Resource in ({WAF}))\r\n| where Category == \"FrontdoorWebApplicationFirewallLog\" or Category == \"FrontDoorWebApplicationFirewallLog\" or OperationName == \"ApplicationGatewayFirewall\" or Category == \"WebApplicationFirewallLogs\"\r\n| extend Rule = strcat(ruleName_s, Message), ClientIP = strcat(clientIp_s, clientIP_s)\r\n// Application Gateway has Matched, Blocked, Detected : translates to Matched, Block, Log\r\n// Azure Front Door has Matched, Block, Log : translates to Matched, Block, Log\r\n| extend Action = iif(action_s == \"Blocked\", Action = \"Block\", action_s)\r\n| extend Action = iif(Action == \"Detected\", Action = \"Log\", Action)\r\n| summarize number = count() by Action",
+        "size": 3,
+        "showAnalytics": true,
+        "title": "WAF actions filter",
+        "timeContextFromParameter": "TimeRange",
+        "exportFieldName": "series",
+        "exportParameterName": "SelectedAction",
+        "exportDefaultValue": "*",
+        "showExportToExcel": true,
+        "exportToExcelOptions": "all",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces",
+        "visualization": "piechart"
+      },
+      "conditionalVisibility": {
+        "parameterName": "selectedTab",
+        "comparison": "isEqualTo",
+        "value": "WAF"
+      },
+      "customWidth": "27",
+      "name": "query - 11"
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "let FakeData = (datatable (Message:string, ruleName_s:string, clientIp_s:string, clientIP_s:string, action_s:string, transactionId_s:string,trackingReference_s:string) [ \"\", \"\", \"\", \"\", \"\", \"\", \"\" ]);\r\nFakeData | union AzureDiagnostics\r\n| where (ResourceType == \"APPLICATIONGATEWAYS\" or ResourceType == \"FRONTDOORS\" or ResourceType == \"PROFILES\" or ResourceType == \"CDNWEBAPPLICATIONFIREWALLPOLICIES\") and (\"{WAFType:label}\" == \"All\" or (ResourceType == \"APPLICATIONGATEWAYS\" and \"{WAFType:label}\" contains \"application gateway\") or (ResourceType == \"FRONTDOORS\" and  \"{WAFType:label}\" contains \"azure front door\") or (ResourceType == \"PROFILES\" and \"{WAFType:label}\" contains \"azure front door premium\") or  (ResourceType==\"CDNWEBAPPLICATIONFIREWALLPOLICIES\" and \"{WAFType:label}\" contains \"cdn\")) and (\"{WAF:label}\" == \"All\" or Resource in ({WAF}))\r\n| where Category == \"FrontdoorWebApplicationFirewallLog\" or Category == \"FrontDoorWebApplicationFirewallLog\" or OperationName == \"ApplicationGatewayFirewall\" or Category == \"WebApplicationFirewallLogs\"\r\n| extend Rule = strcat(ruleName_s, Message), ClientIP = strcat(clientIp_s, clientIP_s)\r\n| extend Action = iif(action_s == \"Blocked\", Action = \"Block\", action_s)\r\n| extend Action = iif(Action == \"Detected\", Action = \"Log\", Action)\r\n| where Action == \"Block\"\r\n| where requestUri_s <> \"/\"\r\n| summarize count() by requestUri_s \r\n| top 40 by count_ desc ",
+        "size": 3,
+        "showAnalytics": true,
+        "title": "Top 40 Blocked Request URI addresses, filter to single URI address",
+        "noDataMessage": "The current data has no \"Blocked\" results",
+        "timeContextFromParameter": "TimeRange",
+        "exportFieldName": "requestUri_s",
+        "exportParameterName": "RequestURI",
+        "exportDefaultValue": "*",
+        "showExportToExcel": true,
+        "exportToExcelOptions": "all",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces",
+        "visualization": "tiles",
+        "tileSettings": {
+          "titleContent": {
+            "columnMatch": "requestUri_s",
+            "formatter": 1,
+            "formatOptions": {
+              "showIcon": true
+            }
+          },
+          "leftContent": {
+            "columnMatch": "count_",
+            "formatter": 8,
+            "formatOptions": {
+              "palette": "auto",
+              "showIcon": true
+            },
+            "numberFormat": {
+              "unit": 17,
+              "options": {
+                "style": "decimal",
+                "useGrouping": false,
+                "maximumFractionDigits": 2,
+                "maximumSignificantDigits": 5
+              }
+            }
+          },
+          "showBorder": false
+        },
+        "graphSettings": {
+          "type": 0,
+          "topContent": {
+            "columnMatch": "requestUri_s",
+            "formatter": 1
+          },
+          "centerContent": {
+            "columnMatch": "count_",
+            "formatter": 1,
+            "numberFormat": {
+              "unit": 17,
+              "options": {
+                "maximumSignificantDigits": 3,
+                "maximumFractionDigits": 2
+              }
+            }
+          }
+        },
+        "mapSettings": {
+          "locInfo": "LatLong",
+          "sizeSettings": "count_",
+          "sizeAggregation": "Sum",
+          "legendMetric": "count_",
+          "legendAggregation": "Sum",
+          "itemColorSettings": {
+            "type": "heatmap",
+            "colorAggregation": "Sum",
+            "nodeColorField": "count_",
+            "heatmapPalette": "greenRed"
+          }
+        }
+      },
+      "conditionalVisibility": {
+        "parameterName": "selectedTab",
+        "comparison": "isEqualTo",
+        "value": "WAF"
+      },
+      "customWidth": "63",
+      "name": "query - 9"
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "let FakeData = (datatable (Message:string, ruleName_s:string, clientIp_s:string, clientIP_s:string, action_s:string, transactionId_s:string,trackingReference_s:string) [ \"\", \"\", \"\", \"\", \"\", \"\", \"\" ]);\r\nFakeData | union AzureDiagnostics\r\n| where (ResourceType == \"APPLICATIONGATEWAYS\" or ResourceType == \"FRONTDOORS\" or ResourceType == \"PROFILES\" or ResourceType == \"CDNWEBAPPLICATIONFIREWALLPOLICIES\") and (\"{WAFType:label}\" == \"All\" or (ResourceType == \"APPLICATIONGATEWAYS\" and \"{WAFType:label}\" contains \"application gateway\") or (ResourceType == \"FRONTDOORS\" and  \"{WAFType:label}\" contains \"azure front door\") or (ResourceType == \"PROFILES\" and \"{WAFType:label}\" contains \"azure front door premium\") or  (ResourceType==\"CDNWEBAPPLICATIONFIREWALLPOLICIES\" and \"{WAFType:label}\" contains \"cdn\")) and (\"{WAF:label}\" == \"All\" or Resource in ({WAF}))\r\n| where Category == \"FrontdoorWebApplicationFirewallLog\" or Category == \"FrontDoorWebApplicationFirewallLog\" or OperationName == \"ApplicationGatewayFirewall\" or Category == \"WebApplicationFirewallLogs\"\r\n| extend Action = iif(action_s == \"Blocked\", Action = \"Block\", action_s)\r\n| extend Action = iif(Action == \"Detected\", Action = \"Log\", Action)\r\n| where '{SelectedAction}' == Action or '{SelectedAction}' == \"*\" \r\n| where '{RequestURI}' == requestUri_s or '{RequestURI}' == \"*\"\r\n| extend Rule = strcat(ruleName_s, Message), ClientIP = strcat(clientIp_s, clientIP_s)\r\n| extend Rule= iif(Rule contains \"Mandatory rule. Cannot be disabled.\", strcat_array(split(Rule, \"Mandatory rule. Cannot be disabled. Inbound \",1),\"\"), Rule) // Removes initial component for mandatory rule \r\n| extend Rule = iif(Rule contains \"Total Inbound Score\", strcat_array(array_concat(split(Rule, \" - SQLI=\", 0), parse_json('[\") -\"]'), split(Rule,\"):\",1)),\"\"),Rule) // Removes smaller information if more info is available for anomaly score\r\n| summarize count() by Rule\r\n| top 50 by count_ desc\r\n",
+        "size": 0,
+        "showAnalytics": true,
+        "title": "Top 50 event triggers, filter by rule name",
+        "timeContextFromParameter": "TimeRange",
+        "exportFieldName": "Rule",
+        "exportParameterName": "Selected",
+        "exportDefaultValue": "*",
+        "showExportToExcel": true,
+        "exportToExcelOptions": "all",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces",
+        "visualization": "table",
+        "gridSettings": {
+          "formatters": [
+            {
+              "columnMatch": "count_",
+              "formatter": 3,
+              "formatOptions": {
+                "palette": "blue",
+                "showIcon": true
+              }
+            }
+          ],
+          "sortBy": [
+            {
+              "itemKey": "$gen_bar_count__1",
+              "sortOrder": 2
+            }
+          ]
+        },
+        "sortBy": [
+          {
+            "itemKey": "$gen_bar_count__1",
+            "sortOrder": 2
+          }
+        ]
+      },
+      "conditionalVisibility": {
+        "parameterName": "selectedTab",
+        "comparison": "isEqualTo",
+        "value": "WAF"
+      },
+      "customWidth": "30",
+      "name": "query - 12"
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "let FakeData = (datatable (Message:string, ruleName_s:string, clientIp_s:string, clientIP_s:string, action_s:string, transactionId_s:string,trackingReference_s:string) [ \"\", \"\", \"\", \"\", \"\", \"\", \"\" ]);\r\nFakeData | union AzureDiagnostics\r\n| where (ResourceType == \"APPLICATIONGATEWAYS\" or ResourceType == \"FRONTDOORS\" or ResourceType == \"PROFILES\" or ResourceType == \"CDNWEBAPPLICATIONFIREWALLPOLICIES\") and (\"{WAFType:label}\" == \"All\" or (ResourceType == \"APPLICATIONGATEWAYS\" and \"{WAFType:label}\" contains \"application gateway\") or (ResourceType == \"FRONTDOORS\" and  \"{WAFType:label}\" contains \"azure front door\") or (ResourceType == \"PROFILES\" and \"{WAFType:label}\" contains \"azure front door premium\") or  (ResourceType==\"CDNWEBAPPLICATIONFIREWALLPOLICIES\" and \"{WAFType:label}\" contains \"cdn\")) and (\"{WAF:label}\" == \"All\" or Resource in ({WAF}))\r\n| where Category == \"FrontdoorWebApplicationFirewallLog\" or Category == \"FrontDoorWebApplicationFirewallLog\" or OperationName == \"ApplicationGatewayFirewall\" or Category == \"WebApplicationFirewallLogs\"\r\n| extend Action = iif(action_s == \"Blocked\", Action = \"Block\", action_s)\r\n| extend Action = iif(Action == \"Detected\", Action = \"Log\", Action)\r\n| where '{SelectedAction}' == Action or '{SelectedAction}' == \"*\" \r\n| where '{RequestURI}' == requestUri_s or '{RequestURI}' == \"*\"\r\n| extend Rule = strcat(ruleName_s, Message), ClientIP = strcat(clientIp_s, clientIP_s)\r\n| where '{Selected}' == Rule or '{Selected}' == \"*\"\r\n| summarize count() by Rule, bin(TimeGenerated, 1h)\r\n",
+        "size": 0,
+        "showAnalytics": true,
+        "title": "Messages, by time",
+        "timeContextFromParameter": "TimeRange",
+        "timeBrushParameterName": "timeBrushUpperSection",
+        "showExportToExcel": true,
+        "exportToExcelOptions": "all",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces",
+        "visualization": "barchart",
+        "tileSettings": {
+          "showBorder": false,
+          "titleContent": {
+            "columnMatch": "Message",
+            "formatter": 1
+          },
+          "leftContent": {
+            "columnMatch": "count_",
+            "formatter": 12,
+            "formatOptions": {
+              "palette": "auto"
+            },
+            "numberFormat": {
+              "unit": 17,
+              "options": {
+                "maximumSignificantDigits": 3,
+                "maximumFractionDigits": 2
+              }
+            }
+          }
+        }
+      },
+      "conditionalVisibility": {
+        "parameterName": "selectedTab",
+        "comparison": "isEqualTo",
+        "value": "WAF"
+      },
+      "customWidth": "70",
+      "name": "query - 13"
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "let FakeData = (datatable (Message:string,ruleName_s:string,clientIp_s:string,clientIP_s:string,action_s:string,transactionId_s:string,site_s:string,details_message_sRole:string,details_file_sRole:string,hostname_sRole:string,Role:string,trackingReference_s:string,requestUri_s:string,ruleSetType_s:string,details_message_s:string,details_data_s:string,details_file_s:string,hostname_s:string,instanceId_s:string) [ \"\", \"\", \"\", \"\", \"\", \"\", \"\",\"\", \"\", \"\", \"\", \"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\" ]);\r\nFakeData | union AzureDiagnostics\r\n| where (ResourceType == \"APPLICATIONGATEWAYS\" or ResourceType == \"FRONTDOORS\" or ResourceType == \"PROFILES\" or ResourceType == \"CDNWEBAPPLICATIONFIREWALLPOLICIES\") and (\"{WAFType:label}\" == \"All\" or (ResourceType == \"APPLICATIONGATEWAYS\" and \"{WAFType:label}\" contains \"application gateway\") or (ResourceType == \"FRONTDOORS\" and  \"{WAFType:label}\" contains \"azure front door\") or (ResourceType == \"PROFILES\" and \"{WAFType:label}\" contains \"azure front door premium\") or (ResourceType==\"CDNWEBAPPLICATIONFIREWALLPOLICIES\" and \"{WAFType:label}\" contains \"cdn\")) and (\"{WAF:label}\" == \"All\" or Resource in ({WAF}))\r\n| where Category == \"FrontdoorWebApplicationFirewallLog\" or Category == \"FrontDoorWebApplicationFirewallLog\" or OperationName == \"ApplicationGatewayFirewall\" or Category == \"WebApplicationFirewallLogs\"\r\n| extend Rule = strcat(ruleName_s, Message), ClientIP = strcat(clientIp_s, clientIP_s)\r\n| extend Action = iif(action_s == \"Blocked\", Action = \"Block\", action_s)\r\n| extend Action = iif(Action == \"Detected\", Action = \"Log\", Action)\r\n| where '{SelectedAction}' == Action or '{SelectedAction}' == \"*\" \r\n| where '{RequestURI}' == requestUri_s or '{RequestURI}' == \"*\"\r\n| where '{Selected}' == Rule or '{Selected}' == \"*\" \r\n| extend Role =  extract(\"ApplicationGateway([a-zA-Z_a-zA-Z_0-9]*)\",1,instanceId_s) \r\n| extend RequestUri = requestUri_s, RuleSetType = ruleSetType_s, Message_Details = details_message_s, Data_Details = details_data_s, File_Details = details_file_s, Hostname = hostname_s, Site = site_s\r\n| project Rule, TimeGenerated, SourceSystem, Hostname, ResourceId, ResourceGroup, ResourceProvider, Category, Role, Action, Site, Message_Details, File_Details, ClientIP, RequestUri\r\n| sort by TimeGenerated",
+        "size": 0,
+        "showAnalytics": true,
+        "title": "Message, full details",
+        "timeContextFromParameter": "timeBrushUpperSection",
+        "showExportToExcel": true,
+        "exportToExcelOptions": "all",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces",
+        "visualization": "table",
+        "gridSettings": {
+          "filter": true
+        },
+        "sortBy": []
+      },
+      "conditionalVisibility": {
+        "parameterName": "selectedTab",
+        "comparison": "isEqualTo",
+        "value": "WAF"
+      },
+      "name": "query - 11"
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "let FakeData = (datatable (Message:string, ruleName_s:string, clientIp_s:string, clientIP_s:string, action_s:string, transactionId_s:string,trackingReference_s:string) [ \"\", \"\", \"\", \"\", \"\", \"\", \"\" ]);\r\nFakeData | union AzureDiagnostics\r\n| where (ResourceType == \"APPLICATIONGATEWAYS\" or ResourceType == \"FRONTDOORS\" or ResourceType == \"PROFILES\" or ResourceType == \"CDNWEBAPPLICATIONFIREWALLPOLICIES\") and (\"{WAFType:label}\" == \"All\" or (ResourceType == \"APPLICATIONGATEWAYS\" and \"{WAFType:label}\" contains \"application gateway\") or (ResourceType == \"FRONTDOORS\" and  \"{WAFType:label}\" contains \"azure front door\") or (ResourceType == \"PROFILES\" and \"{WAFType:label}\" contains \"azure front door premium\") or  (ResourceType==\"CDNWEBAPPLICATIONFIREWALLPOLICIES\" and \"{WAFType:label}\" contains \"cdn\")) and (\"{WAF:label}\" == \"All\" or Resource in ({WAF}))\r\n| where Category == \"FrontdoorWebApplicationFirewallLog\" or Category == \"FrontDoorWebApplicationFirewallLog\" or (OperationName == \"ApplicationGatewayFirewall\" and Message contains \"attack\") or Category == \"WebApplicationFirewallLogs\"\r\n| where '{RequestURI}' == requestUri_s or '{RequestURI}' == \"*\"\r\n| extend Rule = strcat(ruleName_s, Message), ClientIP = strcat(clientIp_s, clientIP_s)\r\n| extend Action = iif(action_s == \"Blocked\", Action = \"Block\", action_s)\r\n| extend Action = iif(Action == \"Detected\", Action = \"Log\", Action)\r\n| where '{SelectedAction}' == Action or '{SelectedAction}' == \"*\" \r\n| where '{Selected}' == Rule or '{Selected}' == \"*\" \r\n| summarize Amount = count() by Rule\r\n| order by Amount desc\r\n\r\n",
+        "size": 0,
+        "title": "Attacks events, by messages and filterable by rule name",
+        "noDataMessage": "Filtered messages are not attack events",
+        "timeContextFromParameter": "TimeRange",
+        "exportFieldName": "",
+        "exportParameterName": "MessageFilter",
+        "exportDefaultValue": "{\"Rule\":\"*\"}",
+        "showExportToExcel": true,
+        "exportToExcelOptions": "all",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces",
+        "visualization": "table",
+        "gridSettings": {
+          "formatters": [
+            {
+              "columnMatch": "Amount",
+              "formatter": 8,
+              "formatOptions": {
+                "palette": "blueDark",
+                "showIcon": true,
+                "aggregation": "Sum"
+              }
+            }
+          ],
+          "filter": true
+        },
+        "sortBy": []
+      },
+      "conditionalVisibility": {
+        "parameterName": "selectedTab",
+        "comparison": "isEqualTo",
+        "value": "WAF"
+      },
+      "customWidth": "20",
+      "name": "query - 16"
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "let SelectedMS = dynamic({MessageFilter}); // reference to the above list of messages (Event trigger)\r\nlet Child = SelectedMS.Rule; // Used to choose a group of messages - redirects to the message which was grouped\r\nlet FakeData = (datatable (Message:string, ruleName_s:string, clientIp_s:string, clientIP_s:string, action_s:string, transactionId_s:string,trackingReference_s:string) [ \"\", \"\", \"\", \"\", \"\", \"\", \"\" ]);\r\nFakeData | union AzureDiagnostics\r\n| where '{RequestURI}' == requestUri_s or '{RequestURI}' == \"*\"\r\n| where (ResourceType == \"APPLICATIONGATEWAYS\" or ResourceType == \"FRONTDOORS\" or ResourceType == \"PROFILES\" or ResourceType == \"CDNWEBAPPLICATIONFIREWALLPOLICIES\") and (\"{WAFType:label}\" == \"All\" or (ResourceType == \"APPLICATIONGATEWAYS\" and \"{WAFType:label}\" contains \"application gateway\") or (ResourceType == \"FRONTDOORS\" and  \"{WAFType:label}\" contains \"azure front door\") or (ResourceType == \"PROFILES\" and \"{WAFType:label}\" contains \"azure front door premium\") or (ResourceType==\"CDNWEBAPPLICATIONFIREWALLPOLICIES\" and \"{WAFType:label}\" contains \"cdn\")) and (\"{WAF:label}\" == \"All\" or Resource in ({WAF}))\r\n| where Category == \"FrontdoorWebApplicationFirewallLog\" or Category == \"FrontDoorWebApplicationFirewallLog\" or (OperationName == \"ApplicationGatewayFirewall\" and Message contains \"attack\") or Category == \"WebApplicationFirewallLogs\" \r\n| extend Action = iif(action_s == \"Blocked\", Action = \"Block\", action_s)\r\n| extend Action = iif(Action == \"Detected\", Action = \"Log\", Action)\r\n| where '{SelectedAction}' == Action or '{SelectedAction}' == \"*\" \r\n| extend Rule = strcat(ruleName_s, Message), ClientIP = strcat(clientIp_s, clientIP_s)\r\n| where Rule == Child or Child == \"*\"\r\n| where '{Selected}' == Rule or '{Selected}' == \"*\"\r\n| summarize Amount = count() by Rule, bin(TimeGenerated, 1h), ResourceId\r\n| project Amount, Rule, TimeGenerated, ResourceId\r\n| order by Amount desc",
+        "size": 0,
+        "showAnalytics": true,
+        "title": "Attack events, by time",
+        "noDataMessage": "Filtered messages are not attack events",
+        "timeContextFromParameter": "TimeRange",
+        "timeBrushParameterName": "timeBrushLowerSection",
+        "exportParameterName": "Message",
+        "exportDefaultValue": "{ \"Name\":\"\", \"Type\":\"*\"}",
+        "showExportToExcel": true,
+        "exportToExcelOptions": "all",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces",
+        "visualization": "areachart"
+      },
+      "conditionalVisibility": {
+        "parameterName": "selectedTab",
+        "comparison": "isEqualTo",
+        "value": "WAF"
+      },
+      "customWidth": "80",
+      "name": "query - 14"
+    },
+    {
+      "type": 9,
+      "content": {
+        "version": "KqlParameterItem/1.0",
+        "crossComponentResources": [
+          "{Workspaces}"
+        ],
+        "parameters": [
+          {
+            "id": "a0259937-eda6-430d-bf13-6c07bfd4e32b",
+            "version": "KqlParameterItem/1.0",
+            "name": "DefaultSubscription_Internal",
+            "type": 1,
+            "isRequired": true,
+            "query": "where type =~ 'microsoft.operationalinsights/workspaces'\r\n| take 1\r\n| project subscriptionId",
+            "crossComponentResources": [
+              "value::selected"
+            ],
+            "isHiddenWhenLocked": true,
+            "timeContext": {
+              "durationMs": 0
+            },
+            "timeContextFromParameter": "TimeRange",
+            "queryType": 1,
+            "resourceType": "microsoft.resourcegraph/resources"
+          },
+          {
+            "id": "84ca1870-93c6-4a43-a5fb-792886ab1eca",
+            "version": "KqlParameterItem/1.0",
+            "name": "TimeRange",
+            "type": 4,
+            "isRequired": true,
+            "value": {
+              "durationMs": 7776000000
+            },
+            "typeSettings": {
+              "selectableValues": [
+                {
+                  "durationMs": 300000
+                },
+                {
+                  "durationMs": 900000
+                },
+                {
+                  "durationMs": 1800000
+                },
+                {
+                  "durationMs": 3600000
+                },
+                {
+                  "durationMs": 14400000
+                },
+                {
+                  "durationMs": 43200000
+                },
+                {
+                  "durationMs": 86400000
+                },
+                {
+                  "durationMs": 172800000
+                },
+                {
+                  "durationMs": 259200000
+                },
+                {
+                  "durationMs": 604800000
+                },
+                {
+                  "durationMs": 1209600000
+                },
+                {
+                  "durationMs": 2419200000
+                },
+                {
+                  "durationMs": 2592000000
+                },
+                {
+                  "durationMs": 5184000000
+                },
+                {
+                  "durationMs": 7776000000
+                }
+              ],
+              "allowCustom": true
+            },
+            "timeContext": {
+              "durationMs": 86400000
+            }
+          },
+          {
+            "id": "d213ef66-f7cd-4e8f-bd05-d7811577fb61",
+            "version": "KqlParameterItem/1.0",
+            "name": "Subscription",
+            "type": 6,
+            "isRequired": true,
+            "multiSelect": true,
+            "quote": "'",
+            "delimiter": ",",
+            "query": "summarize by subscriptionId\r\n| project value = strcat(\"/subscriptions/\", subscriptionId), label = subscriptionId, selected = iff(subscriptionId =~ '{DefaultSubscription_Internal}', true, false)\r\n",
+            "crossComponentResources": [
+              "value::selected"
+            ],
+            "typeSettings": {
+              "additionalResourceOptions": [
+                "value::all"
+              ],
+              "showDefault": false
+            },
+            "timeContext": {
+              "durationMs": 0
+            },
+            "timeContextFromParameter": "TimeRange",
+            "queryType": 1,
+            "resourceType": "microsoft.resourcegraph/resources"
+          },
+          {
+            "id": "3d0a03f2-3edd-45a0-9113-76be5d9c81d2",
+            "version": "KqlParameterItem/1.0",
+            "name": "Workspaces",
+            "type": 5,
+            "isRequired": true,
+            "multiSelect": true,
+            "quote": "'",
+            "delimiter": ",",
+            "query": "where type =~ 'microsoft.operationalinsights/workspaces'\r\n| where strcat('/subscriptions/',subscriptionId) in ({Subscription})\r\n| project id",
+            "crossComponentResources": [
+              "value::selected"
+            ],
+            "value": [
+              "/subscriptions/<subscriptionID>/resourceGroups/<resourceGroup>/providers/Microsoft.OperationalInsights/workspaces/<LogAnalyticsWorkspace>"
+            ],
+            "typeSettings": {
+              "additionalResourceOptions": [
+                "value::all"
+              ],
+              "showDefault": false
+            },
+            "timeContext": {
+              "durationMs": 0
+            },
+            "timeContextFromParameter": "TimeRange",
+            "queryType": 1,
+            "resourceType": "microsoft.resourcegraph/resources"
+          },
+          {
+            "id": "50862310-e38b-4c56-9475-de85c7f1e78b",
+            "version": "KqlParameterItem/1.0",
+            "name": "KeyVault",
+            "type": 5,
+            "isRequired": true,
+            "multiSelect": true,
+            "quote": "'",
+            "delimiter": ",",
+            "query": "where type =~ 'microsoft.keyvault/vaults'\r\n| where strcat('/subscriptions/',subscriptionId) in ({Subscription})\r\n| project id=tolower(id)",
+            "crossComponentResources": [
+              "{Workspaces}"
+            ],
+            "value": [
+              "value::all"
+            ],
+            "typeSettings": {
+              "additionalResourceOptions": [
+                "value::all"
+              ],
+              "showDefault": false
+            },
+            "timeContext": {
+              "durationMs": 0
+            },
+            "timeContextFromParameter": "TimeRange",
+            "queryType": 1,
+            "resourceType": "microsoft.resourcegraph/resources"
+          }
+        ],
+        "style": "pills",
+        "queryType": 1,
+        "resourceType": "microsoft.resourcegraph/resources"
+      },
+      "conditionalVisibility": {
+        "parameterName": "selectedTab",
+        "comparison": "isEqualTo",
+        "value": "KV"
+      },
+      "name": "parameters - 1"
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "datatable (Event:string)\r\n    [\"AKV Workbook\"]\r\n| extend keyvault = (strcat(\"[\", \"{KeyVault}\", \"]\"))\r\n| extend keyvault = todynamic(replace(\"'\", '\"', keyvault))\r\n| mvexpand keyvault\r\n| extend subscriptionId = extract(@\"/subscriptions/([^/]+)\", 1, tostring(keyvault))\r\n| summarize AKVs = count() by subscriptionId, DefenderForKV = 0\r\n| union\r\n(\r\nsecurityresources\r\n| where type =~ \"microsoft.security/pricings\"\r\n| where name == \"KeyVaults\"\r\n| project DefenderForKV = iif(properties.pricingTier == 'Standard', 1, 0), AKVs = 0, subscriptionId\r\n)\r\n| summarize AKVs = sum(AKVs), DefenderForKV = sum(DefenderForKV) by subscriptionId\r\n| project Subscription = strcat('/subscriptions/', subscriptionId), [\"Kay Vaults\"] = AKVs, ['Defender for Key Vault'] = iif(DefenderForKV > 0,'yes','no'), ['Onboard Azure Defender'] = iif(DefenderForKV > 0, '', 'https://ms.portal.azure.com/#blade/Microsoft_Azure_Security/SecurityMenuBlade/26')\r\n| order by ['Defender for Key Vault'] asc\r\n ",
+        "size": 0,
+        "title": "Subscriptions covered by Azure Defender for Key Vault",
+        "queryType": 1,
+        "resourceType": "microsoft.resourcegraph/resources",
+        "gridSettings": {
+          "formatters": [
+            {
+              "columnMatch": "Defender for Key Vault",
+              "formatter": 18,
+              "formatOptions": {
+                "thresholdsOptions": "icons",
+                "thresholdsGrid": [
+                  {
+                    "operator": "==",
+                    "thresholdValue": "no",
+                    "representation": "4",
+                    "text": ""
+                  },
+                  {
+                    "operator": "Default",
+                    "thresholdValue": null,
+                    "representation": "success",
+                    "text": ""
+                  }
+                ]
+              }
+            },
+            {
+              "columnMatch": "Onboard Azure Defender",
+              "formatter": 7,
+              "formatOptions": {
+                "linkTarget": "Url"
+              }
+            }
+          ]
+        }
+      },
+      "conditionalVisibility": {
+        "parameterName": "selectedTab",
+        "comparison": "isEqualTo",
+        "value": "KV"
+      },
+      "customWidth": "50",
+      "name": "query - 3"
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "datatable (Event:string)\r\n    [\"AKV Workbook\"]\r\n| extend keyvaults = (strcat(\"[\", \"{KeyVault}\", \"]\"))\r\n| extend keyvaults = todynamic(replace(\"'\", '\"', keyvaults))\r\n| mvexpand keyvaults\r\n| extend subscriptionId = extract(@\"/subscriptions/([^/]+)\", 1, tostring(keyvaults))\r\n| summarize AKVs = count() by subscriptionId, DefenderForKV = 0\r\n| union\r\n(\r\nsecurityresources\r\n| where type =~ \"microsoft.security/pricings\"\r\n| where name == \"KeyVaults\"\r\n| project DefenderForKV = iif(properties.pricingTier == 'Standard', 1, 0), AKVs = 0, subscriptionId\r\n)\r\n| summarize AKVs = sum(AKVs), DefenderForKV = sum(DefenderForKV) by subscriptionId\r\n| project Subscription = 1, ['Defender for Key Vault'] = iif(DefenderForKV > 0,'Protected by Azure Defender','Not protected by Azure Defender')",
+        "size": 0,
+        "queryType": 1,
+        "resourceType": "microsoft.resourcegraph/resources",
+        "visualization": "piechart"
+      },
+      "conditionalVisibility": {
+        "parameterName": "selectedTab",
+        "comparison": "isEqualTo",
+        "value": "KV"
+      },
+      "customWidth": "50",
+      "name": "query - 4"
+    },
+    {
+      "type": 1,
+      "content": {
+        "json": "## Azure Defender for Key Vaults alerts"
+      },
+      "conditionalVisibility": {
+        "parameterName": "selectedTab",
+        "comparison": "isEqualTo",
+        "value": "KV"
+      },
+      "name": "text - 9 - Copy"
+    },
+    {
+      "type": 9,
+      "content": {
+        "version": "KqlParameterItem/1.0",
+        "crossComponentResources": [
+          "{Workspaces}"
+        ],
+        "parameters": [
+          {
+            "id": "66a39242-f029-479f-b90e-a0249f4ae27b",
+            "version": "KqlParameterItem/1.0",
+            "name": "AlertSeverity",
+            "type": 2,
+            "isRequired": true,
+            "multiSelect": true,
+            "quote": "'",
+            "delimiter": ",",
+            "query": "SecurityAlert\r\n| where AlertType startswith \"KV_\"\r\n| summarize Count = count() by AlertSeverity\r\n| order by Count desc, AlertSeverity asc\r\n| project Value = AlertSeverity, Label = strcat(AlertSeverity, ' - ', Count)\r\n",
+            "crossComponentResources": [
+              "{Workspaces}"
+            ],
+            "value": [
+              "value::all"
+            ],
+            "typeSettings": {
+              "additionalResourceOptions": [
+                "value::all"
+              ],
+              "showDefault": false
+            },
+            "timeContext": {
+              "durationMs": 0
+            },
+            "timeContextFromParameter": "TimeRange",
+            "queryType": 0,
+            "resourceType": "microsoft.operationalinsights/workspaces"
+          }
+        ],
+        "style": "pills",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces"
+      },
+      "conditionalVisibility": {
+        "parameterName": "selectedTab",
+        "comparison": "isEqualTo",
+        "value": "KV"
+      },
+      "name": "parameters - 6"
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "let data = SecurityAlert\r\n| where \"{AlertSeverity:lable}\" == \"All\" or AlertSeverity in ({AlertSeverity})\r\n| where AlertType startswith \"KV_\"\r\n| where tolower(ResourceId) in ({KeyVault});\r\ndata\r\n| summarize Count = count() by AlertSeverity\r\n| join kind = inner (data\r\n | make-series Trend = count() default = 0 on TimeGenerated from {TimeRange:start} to {TimeRange:end} step {TimeRange:grain} by AlertSeverity)\r\n on AlertSeverity\r\n | project-away TimeGenerated\r\n| extend AlertSeveritys = AlertSeverity\r\n| union (\r\n data \r\n | summarize Count = count() \r\n | extend jkey = 1\r\n | join kind=inner (data\r\n | make-series Trend = count() default = 0 on TimeGenerated from {TimeRange:start} to {TimeRange:end} step {TimeRange:grain}\r\n | extend jkey = 1) on jkey\r\n | extend AlertSeverity = 'All', AlertSeveritys = '*' \r\n)\r\n| extend Severity = iif(AlertSeverity == \"All\", 0,iif(AlertSeverity == \"High\", 1, iif(AlertSeverity == \"Medium\", 2, iif(AlertSeverity == \"Low\", 3, 4))))\r\n| order by Severity asc\r\n",
+        "size": 3,
+        "timeContextFromParameter": "TimeRange",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces",
+        "visualization": "tiles",
+        "tileSettings": {
+          "titleContent": {
+            "columnMatch": "AlertSeverity",
+            "formatter": 1
+          },
+          "leftContent": {
+            "columnMatch": "Count",
+            "formatter": 12,
+            "formatOptions": {
+              "palette": "auto"
+            },
+            "numberFormat": {
+              "unit": 17,
+              "options": {
+                "style": "decimal",
+                "useGrouping": false,
+                "maximumFractionDigits": 2,
+                "maximumSignificantDigits": 3
+              }
+            }
+          },
+          "secondaryContent": {
+            "columnMatch": "Trend",
+            "formatter": 9,
+            "formatOptions": {
+              "palette": "blue"
+            }
+          },
+          "showBorder": false
+        }
+      },
+      "conditionalVisibility": {
+        "parameterName": "selectedTab",
+        "comparison": "isEqualTo",
+        "value": "KV"
+      },
+      "name": "query - 5"
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "SecurityAlert\r\n| where AlertType startswith \"KV_\"\r\n| where tolower(ResourceId) in ({KeyVault})\r\n| where AlertSeverity in ({AlertSeverity})\r\n| summarize AlertCount = count() by ResourceId\r\n| project Resource = tolower(ResourceId), AlertCount\r\n| order by AlertCount desc\r\n",
+        "size": 0,
+        "timeContextFromParameter": "TimeRange",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces",
+        "crossComponentResources": [
+          "{Workspaces}"
+        ],
+        "visualization": "table",
+        "gridSettings": {
+          "formatters": [
+            {
+              "columnMatch": "AlertCount",
+              "formatter": 3,
+              "formatOptions": {
+                "palette": "blue"
+              }
+            },
+            {
+              "columnMatch": "ResourceId",
+              "formatter": 1
+            },
+            {
+              "columnMatch": "x",
+              "formatter": 1
+            }
+          ]
+        }
+      },
+      "conditionalVisibility": {
+        "parameterName": "selectedTab",
+        "comparison": "isEqualTo",
+        "value": "KV"
+      },
+      "customWidth": "30",
+      "name": "query - 5"
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "SecurityAlert\r\n| where TimeGenerated {TimeRange}\r\n| where \"{AlertSeverity}\" has AlertSeverity or isempty(\"{AlertSeverity}\")\r\n| where AlertType startswith \"KV_\"\r\n| where ResourceId in ({KeyVault})\r\n| make-series Count=count() on TimeGenerated from {TimeRange:start} to {TimeRange:end} step {TimeRange:grain} by ResourceId\r\n//| summarize Count=count() by ResourceId, bin(TimeGenerated,{TimeRange:grain})\r\n",
+        "size": 0,
+        "title": "Key vault alerts",
+        "noDataMessage": "No alrets from Azure Defender for Key Vaults",
+        "timeContextFromParameter": "TimeRange",
+        "timeBrushParameterName": "TimeRangeFilter",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces",
+        "crossComponentResources": [
+          "{Workspaces}"
+        ],
+        "visualization": "timechart"
+      },
+      "conditionalVisibility": {
+        "parameterName": "selectedTab",
+        "comparison": "isEqualTo",
+        "value": "KV"
+      },
+      "customWidth": "70",
+      "name": "query - 9"
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "let Incidents = SecurityIncident\r\n| project AlertIds, IncidentUrl\r\n|mv-expand AlertId = AlertIds\r\n| extend AlertId = tostring(AlertId);\r\nSecurityAlert\r\n| where TimeGenerated between ({TimeRangeFilter:start} .. ({TimeRangeFilter:end} + {TimeRange:grain}))\r\n| where AlertType startswith \"KV_\"\r\n| where ResourceId in ({KeyVault})\r\n| where AlertSeverity in ({AlertSeverity})\r\n| project TimeGenerated, ResourceId, AlertSeverity, DisplayName, AlertLink, AlertId=tostring(SystemAlertId)\r\n| order by TimeGenerated desc\r\n| join kind=leftouter Incidents on AlertId\r\n| project-away AlertIds, AlertId1\r\n| project TimeGenerated, ResourceId, AlertSeverity, DisplayName, ['Azure Defender Alert'] = AlertLink, Incident = IncidentUrl, AlertId\r\n",
+        "size": 0,
+        "title": "Key vault alerts",
+        "timeContextFromParameter": "TimeRange",
+        "exportFieldName": "AlertId",
+        "exportParameterName": "SelectedAlertId",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces",
+        "crossComponentResources": [
+          "{Workspaces}"
+        ],
+        "gridSettings": {
+          "formatters": [
+            {
+              "columnMatch": "Azure Defender Alert",
+              "formatter": 7,
+              "formatOptions": {
+                "linkTarget": "Url",
+                "linkLabel": "Go to alert"
+              }
+            },
+            {
+              "columnMatch": "Incident",
+              "formatter": 7,
+              "formatOptions": {
+                "linkTarget": "Url",
+                "linkLabel": ""
+              }
+            },
+            {
+              "columnMatch": "AlertId",
+              "formatter": 5
+            }
+          ],
+          "filter": true,
+          "sortBy": [
+            {
+              "itemKey": "DisplayName",
+              "sortOrder": 2
+            }
+          ]
+        },
+        "sortBy": [
+          {
+            "itemKey": "DisplayName",
+            "sortOrder": 2
+          }
+        ]
+      },
+      "conditionalVisibility": {
+        "parameterName": "selectedTab",
+        "comparison": "isEqualTo",
+        "value": "KV"
+      },
+      "name": "query - 15 - Copy - Copy - Copy"
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "let data = SecurityAlert\r\n| where AlertType startswith \"KV_\"\r\n| where SystemAlertId == '{SelectedAlertId}';\r\nlet nodes = data\r\n| project Id = SystemAlertId, Name = DisplayName, Size = 1, Kind = 'alert'\r\n| union (\r\ndata \r\n| project parse_json(Entities), SystemAlertId\r\n| mv-expand Entities\r\n| evaluate bag_unpack(Entities)\r\n| project Id = strcat(SystemAlertId, '-',$id), Name = strcat(ResourceId,Address,AadUserId), Size = 1, Kind = Type\r\n);\r\nlet links = data\r\n| project parse_json(Entities), SystemAlertId\r\n| mv-expand Entities\r\n| evaluate bag_unpack(Entities)\r\n| project SourceId = SystemAlertId, TargetId = strcat(SystemAlertId, '-', $id), Size = 1, Kind = Type;\r\nnodes | union (links)\r\n",
+        "size": 2,
+        "title": "Alert and entity graph (chose an alert from the list above)",
+        "timeContextFromParameter": "TimeRange",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces",
+        "crossComponentResources": [
+          "{Workspaces}"
+        ],
+        "visualization": "graph",
+        "gridSettings": {
+          "formatters": [
+            {
+              "columnMatch": "Name",
+              "formatter": 1
+            }
+          ]
+        },
+        "graphSettings": {
+          "type": 0,
+          "topContent": {
+            "columnMatch": "Name",
+            "formatter": 13,
+            "formatOptions": {
+              "linkTarget": null,
+              "showIcon": true
+            },
+            "numberFormat": {
+              "unit": 0,
+              "options": {
+                "style": "decimal",
+                "useGrouping": false
+              }
+            },
+            "tooltipFormat": {
+              "tooltip": "{0}"
+            }
+          },
+          "centerContent": {
+            "columnMatch": "Kind",
+            "formatter": 16,
+            "formatOptions": {
+              "showIcon": true
+            },
+            "numberFormat": {
+              "unit": 17,
+              "options": {
+                "style": "decimal",
+                "maximumFractionDigits": 2,
+                "maximumSignificantDigits": 3
+              }
+            }
+          },
+          "nodeIdField": "Id",
+          "sourceIdField": "SourceId",
+          "targetIdField": "TargetId",
+          "graphOrientation": 3,
+          "showOrientationToggles": false,
+          "edgeSize": "Size",
+          "edgeLabel": "Kind",
+          "nodeSize": null,
+          "staticNodeSize": 100,
+          "colorSettings": {
+            "nodeColorField": "Kind",
+            "type": 1,
+            "colorPalette": "default"
+          },
+          "hivesMargin": 5
+        }
+      },
+      "conditionalVisibility": {
+        "parameterName": "selectedTab",
+        "comparison": "isEqualTo",
+        "value": "KV"
+      },
+      "name": "query - 6",
+      "styleSettings": {
+        "showBorder": true
+      }
+    },
+    {
+      "type": 9,
+      "content": {
+        "version": "KqlParameterItem/1.0",
+        "parameters": [
+          {
+            "id": "52bfbd84-1639-480c-bda5-bfc87fd81832",
+            "version": "KqlParameterItem/1.0",
+            "name": "TimeRange",
+            "type": 4,
+            "isRequired": true,
+            "value": {
+              "durationMs": 604800000
+            },
+            "typeSettings": {
+              "selectableValues": [
+                {
+                  "durationMs": 300000
+                },
+                {
+                  "durationMs": 900000
+                },
+                {
+                  "durationMs": 1800000
+                },
+                {
+                  "durationMs": 3600000
+                },
+                {
+                  "durationMs": 14400000
+                },
+                {
+                  "durationMs": 43200000
+                },
+                {
+                  "durationMs": 86400000
+                },
+                {
+                  "durationMs": 172800000
+                },
+                {
+                  "durationMs": 259200000
+                },
+                {
+                  "durationMs": 604800000
+                },
+                {
+                  "durationMs": 1209600000
+                },
+                {
+                  "durationMs": 2419200000
+                },
+                {
+                  "durationMs": 2592000000
+                },
+                {
+                  "durationMs": 5184000000
+                },
+                {
+                  "durationMs": 7776000000
+                }
+              ]
+            }
+          },
+          {
+            "id": "eeb5dcf9-e898-46af-9c12-d91d97e13cd3",
+            "version": "KqlParameterItem/1.0",
+            "name": "Caller",
+            "type": 2,
+            "isRequired": true,
+            "multiSelect": true,
+            "quote": "'",
+            "delimiter": ",",
+            "query": "AzureActivity\r\n| summarize by Caller",
+            "value": [
+              "value::all"
+            ],
+            "typeSettings": {
+              "additionalResourceOptions": [
+                "value::all"
+              ],
+              "selectAllValue": "All"
+            },
+            "queryType": 0,
+            "resourceType": "microsoft.operationalinsights/workspaces"
+          },
+          {
+            "id": "46375a76-7ae1-4d7e-9082-4191531198a9",
+            "version": "KqlParameterItem/1.0",
+            "name": "ResourceGroup",
+            "type": 2,
+            "isRequired": true,
+            "multiSelect": true,
+            "quote": "'",
+            "delimiter": ",",
+            "query": "AzureActivity\r\n| summarize by ResourceGroup",
+            "value": [
+              "value::all"
+            ],
+            "typeSettings": {
+              "resourceTypeFilter": {
+                "microsoft.resources/resourcegroups": true
+              },
+              "additionalResourceOptions": [
+                "value::all"
+              ],
+              "selectAllValue": "All"
+            },
+            "timeContext": {
+              "durationMs": 0
+            },
+            "timeContextFromParameter": "TimeRange",
+            "queryType": 0,
+            "resourceType": "microsoft.operationalinsights/workspaces"
+          }
+        ],
+        "style": "pills",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces"
+      },
+      "conditionalVisibility": {
+        "parameterName": "selectedTab",
+        "comparison": "isEqualTo",
+        "value": "AzureActivity"
+      },
+      "name": "parameters - 2"
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "let data = AzureActivity\r\n| where \"{Caller:lable}\" == \"All\" or \"{Caller:lable}\" == \"All\" or Caller in ({Caller})\r\n| where \"{ResourceGroup:lable}\" == \"All\" or \"{ResourceGroup:lable}\" == \"All\" or ResourceGroup in ({ResourceGroup});\r\ndata\r\n| summarize Count = count() by ResourceGroup\r\n| join kind = fullouter (datatable(ResourceGroup:string)['Medium', 'high', 'low']) on ResourceGroup\r\n| project ResourceGroup = iff(ResourceGroup == '', ResourceGroup1, ResourceGroup), Count = iff(ResourceGroup == '', 0, Count)\r\n| join kind = inner (data\r\n | make-series Trend = count() default = 0 on TimeGenerated from {TimeRange:start} to {TimeRange:end} step {TimeRange:grain} by ResourceGroup)\r\n on ResourceGroup\r\n| project-away ResourceGroup1, TimeGenerated\r\n| extend ResourceGroups = ResourceGroup\r\n| union (\r\n data \r\n | summarize Count = count() \r\n | extend jkey = 1\r\n | join kind=inner (data\r\n | make-series Trend = count() default = 0 on TimeGenerated from {TimeRange:start} to {TimeRange:end} step {TimeRange:grain}\r\n | extend jkey = 1) on jkey\r\n | extend ResourceGroup = 'All', ResourceGroups = '*' \r\n)\r\n| order by Count desc\r\n| take 10",
+        "size": 4,
+        "title": "Top 10 active resource groups",
+        "timeContextFromParameter": "TimeRange",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces",
+        "visualization": "tiles",
+        "tileSettings": {
+          "titleContent": {
+            "columnMatch": "ResourceGroup",
+            "formatter": 1,
+            "formatOptions": {
+              "showIcon": true
+            }
+          },
+          "leftContent": {
+            "columnMatch": "Count",
+            "formatter": 12,
+            "formatOptions": {
+              "palette": "auto",
+              "showIcon": true
+            },
+            "numberFormat": {
+              "unit": 17,
+              "options": {
+                "maximumSignificantDigits": 3,
+                "maximumFractionDigits": 2
+              }
+            }
+          },
+          "secondaryContent": {
+            "columnMatch": "Trend",
+            "formatter": 9,
+            "formatOptions": {
+              "palette": "blueOrange",
+              "showIcon": true
+            }
+          },
+          "showBorder": false
+        }
+      },
+      "conditionalVisibility": {
+        "parameterName": "selectedTab",
+        "comparison": "isEqualTo",
+        "value": "AzureActivity"
+      },
+      "name": "query - 3"
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "AzureActivity\r\n| where \"{Caller:lable}\" == \"All\" or Caller in ({Caller})\r\n| where \"{ResourceGroup:lable}\" == \"All\" or ResourceGroup in ({ResourceGroup})\r\n| summarize deletions = countif(OperationNameValue hassuffix \"delete\"), creations = countif(OperationNameValue hassuffix \"write\"), updates = countif(OperationNameValue hassuffix \"write\"), Activities = count(OperationNameValue) by bin_at(TimeGenerated, 1h, now())\r\n",
+        "size": 0,
+        "title": "Activities over time",
+        "color": "gray",
+        "timeContextFromParameter": "TimeRange",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces",
+        "visualization": "linechart",
+        "graphSettings": {
+          "type": 0
+        }
+      },
+      "conditionalVisibility": {
+        "parameterName": "selectedTab",
+        "comparison": "isEqualTo",
+        "value": "AzureActivity"
+      },
+      "name": "query - 1"
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "AzureActivity\r\n| where \"{Caller:lable}\" == \"All\" or Caller in ({Caller})\r\n| where \"{ResourceGroup:lable}\" == \"All\" or ResourceGroup in ({ResourceGroup})\r\n| summarize deletions = countif(OperationNameValue hassuffix \"Delete\"), creations = countif(OperationNameValue hassuffix \"write\"), updates = countif(OperationNameValue hassuffix \"write\"), Activities = count() by Caller\r\n",
+        "size": 1,
+        "title": "Caller activities",
+        "timeContextFromParameter": "TimeRange",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces",
+        "gridSettings": {
+          "formatters": [
+            {
+              "columnMatch": "deletions",
+              "formatter": 4,
+              "formatOptions": {
+                "showIcon": true,
+                "aggregation": "Count"
+              }
+            },
+            {
+              "columnMatch": "creations",
+              "formatter": 4,
+              "formatOptions": {
+                "palette": "purple",
+                "showIcon": true,
+                "aggregation": "Count"
+              }
+            },
+            {
+              "columnMatch": "updates",
+              "formatter": 4,
+              "formatOptions": {
+                "palette": "gray",
+                "showIcon": true,
+                "aggregation": "Count"
+              }
+            },
+            {
+              "columnMatch": "Activities",
+              "formatter": 4,
+              "formatOptions": {
+                "palette": "greenDark",
+                "linkTarget": "GenericDetails",
+                "linkIsContextBlade": true,
+                "showIcon": true,
+                "aggregation": "Count",
+                "workbookContext": {
+                  "componentIdSource": "workbook",
+                  "resourceIdsSource": "workbook",
+                  "templateIdSource": "static",
+                  "templateId": "https://go.microsoft.com/fwlink/?linkid=874159&resourceId=%2Fsubscriptions%2F44e4eff8-1fcb-4a22-a7d6-992ac7286382%2FresourceGroups%2FSOC&featureName=Workbooks&itemId=%2Fsubscriptions%2F44e4eff8-1fcb-4a22-a7d6-992ac7286382%2Fresourcegroups%2Fsoc%2Fproviders%2Fmicrosoft.insights%2Fworkbooks%2F4c195aec-747f-40bb-addb-934acb3ec646&name=CiscoASA&func=NavigateToPortalFeature&type=workbook",
+                  "typeSource": "workbook",
+                  "gallerySource": "workbook"
+                }
+              }
+            }
+          ],
+          "sortBy": [
+            {
+              "itemKey": "$gen_bar_updates_3",
+              "sortOrder": 2
+            }
+          ]
+        },
+        "sortBy": [
+          {
+            "itemKey": "$gen_bar_updates_3",
+            "sortOrder": 2
+          }
+        ]
+      },
+      "conditionalVisibility": {
+        "parameterName": "selectedTab",
+        "comparison": "isEqualTo",
+        "value": "AzureActivity"
+      },
+      "name": "query - 1"
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "AzureActivity \r\n| where \"{Caller:lable}\" == \"All\" or Caller in ({Caller})\r\n| where \"{ResourceGroup:lable}\" == \"All\" or ResourceGroup in ({ResourceGroup})\r\n| summarize Informational = countif(Level == \"Informational\"), Warning = countif(Level == \"Warning\"), Error = countif(Level == \"Error\") by bin_at(TimeGenerated, 1h, now())\r\n",
+        "size": 0,
+        "color": "redBright",
+        "timeContextFromParameter": "TimeRange",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces",
+        "visualization": "scatterchart",
+        "tileSettings": {
+          "showBorder": false
+        },
+        "graphSettings": {
+          "type": 2,
+          "topContent": {
+            "columnMatch": "Error",
+            "formatter": 12,
+            "formatOptions": {
+              "showIcon": true
+            }
+          },
+          "hivesContent": {
+            "columnMatch": "TimeGenerated",
+            "formatter": 1,
+            "formatOptions": {
+              "showIcon": true
+            }
+          },
+          "nodeIdField": "Error",
+          "sourceIdField": "Error",
+          "targetIdField": "Error",
+          "nodeSize": null,
+          "staticNodeSize": 100,
+          "colorSettings": null,
+          "groupByField": "TimeGenerated",
+          "hivesMargin": 5
+        }
+      },
+      "conditionalVisibility": {
+        "parameterName": "selectedTab",
+        "comparison": "isEqualTo",
+        "value": "AzureActivity"
+      },
+      "name": "query - 4"
+    },
+    {
+      "type": 9,
+      "content": {
+        "version": "KqlParameterItem/1.0",
+        "parameters": [
+          {
+            "id": "80e332f7-8176-461f-b27a-0a52242fe6c9",
+            "version": "KqlParameterItem/1.0",
+            "name": "TimeRange",
+            "type": 4,
+            "isRequired": true,
+            "value": {
+              "durationMs": 86400000
+            },
+            "typeSettings": {
+              "selectableValues": [
+                {
+                  "durationMs": 300000
+                },
+                {
+                  "durationMs": 900000
+                },
+                {
+                  "durationMs": 1800000
+                },
+                {
+                  "durationMs": 3600000
+                },
+                {
+                  "durationMs": 14400000
+                },
+                {
+                  "durationMs": 43200000
+                },
+                {
+                  "durationMs": 86400000
+                },
+                {
+                  "durationMs": 172800000
+                },
+                {
+                  "durationMs": 259200000
+                },
+                {
+                  "durationMs": 604800000
+                },
+                {
+                  "durationMs": 1209600000
+                },
+                {
+                  "durationMs": 2419200000
+                },
+                {
+                  "durationMs": 2592000000
+                },
+                {
+                  "durationMs": 5184000000
+                },
+                {
+                  "durationMs": 7776000000
+                }
+              ],
+              "allowCustom": true
+            }
+          },
+          {
+            "id": "5a93ede8-361d-4cc6-93f8-967dfc355143",
+            "version": "KqlParameterItem/1.0",
+            "name": "Activity",
+            "type": 2,
+            "isRequired": true,
+            "multiSelect": true,
+            "quote": "'",
+            "delimiter": ",",
+            "query": "SecurityEvent\r\n| summarize Count = count() by Activity\r\n| order by Count desc, Activity asc\r\n| project Value = Activity, Label = strcat(Activity, ' - ', Count)",
+            "value": [
+              "value::all"
+            ],
+            "typeSettings": {
+              "additionalResourceOptions": [
+                "value::all"
+              ],
+              "selectAllValue": "All"
+            },
+            "queryType": 0,
+            "resourceType": "microsoft.operationalinsights/workspaces"
+          }
+        ],
+        "style": "pills",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces"
+      },
+      "conditionalVisibility": {
+        "parameterName": "selectedTab",
+        "comparison": "isEqualTo",
+        "value": "WIAM"
+      },
+      "name": "parameters - 1"
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "let data = SecurityEvent\r\n| where \"{Activity:lable}\" == \"All\" or Activity in ({Activity});\r\ndata\r\n| summarize Count = count() by Activity\r\n| join kind = fullouter (datatable(Activity:string)['Medium', 'high', 'low']) on Activity\r\n| project Activity = iff(Activity == '', Activity1, Activity), Count = iff(Activity == '', 0, Count)\r\n| join kind = inner (data\r\n | make-series Trend = count() default = 0 on TimeGenerated from {TimeRange:start} to {TimeRange:end} step {TimeRange:grain} by Activity)\r\n on Activity\r\n| project-away Activity1, TimeGenerated\r\n| extend Activitys = Activity\r\n| union (\r\n data \r\n | summarize Count = count() \r\n | extend jkey = 1\r\n | join kind=inner (data\r\n | make-series Trend = count() default = 0 on TimeGenerated from {TimeRange:start} to {TimeRange:end} step {TimeRange:grain}\r\n | extend jkey = 1) on jkey\r\n | extend Activity = 'All', Activitys = '*' \r\n)\r\n| order by Count desc\r\n| take 10",
+        "size": 4,
+        "title": "Top 10 activities - click to filter by activity",
+        "timeContextFromParameter": "TimeRange",
+        "exportFieldName": "Activity",
+        "exportParameterName": "ActivityPiker",
+        "exportDefaultValue": "All",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces",
+        "visualization": "tiles",
+        "tileSettings": {
+          "titleContent": {
+            "columnMatch": "Activity",
+            "formatter": 1,
+            "formatOptions": {
+              "showIcon": true
+            }
+          },
+          "leftContent": {
+            "columnMatch": "Count",
+            "formatter": 12,
+            "formatOptions": {
+              "palette": "auto",
+              "showIcon": true
+            },
+            "numberFormat": {
+              "unit": 17,
+              "options": {
+                "maximumSignificantDigits": 3,
+                "maximumFractionDigits": 2
+              }
+            }
+          },
+          "secondaryContent": {
+            "columnMatch": "Trend",
+            "formatter": 9,
+            "formatOptions": {
+              "palette": "lightBlue",
+              "showIcon": true
+            }
+          },
+          "showBorder": false
+        }
+      },
+      "conditionalVisibility": {
+        "parameterName": "selectedTab",
+        "comparison": "isEqualTo",
+        "value": "WIAM"
+      },
+      "name": "query - 2"
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "let data = SecurityEvent\r\n| where \"{Activity:lable}\" == \"All\" or Activity in ({Activity})\r\n| where Activity == '{ActivityPiker}' or '{ActivityPiker}' == \"All\" and AccountType == 'User'\r\n| extend Name = extract(@'^(.*\\\\)?([^@]*)(@.*)?$', 2, tolower(Account));\r\nlet appData = data\r\n| summarize TotalCount = count() by Name\r\n| join kind=inner (data\r\n    | make-series Trend = count() default = 0 on TimeGenerated in range({TimeRange:start}, {TimeRange:end}, {TimeRange:grain}) by Name\r\n    | project-away TimeGenerated) on Name\r\n| order by TotalCount desc, Name asc\r\n| project Name, TotalCount, Trend\r\n| serialize Id = row_number();\r\ndata\r\n| summarize TotalCount = count() by Activity , Name\r\n| join kind=inner (data\r\n    | make-series Trend = count() default = 0 on TimeGenerated in range({TimeRange:start}, {TimeRange:end}, {TimeRange:grain}) by Name, Activity\r\n    | project-away TimeGenerated) on Name, Activity\r\n| order by TotalCount desc, Name asc\r\n| project Name, Activity, TotalCount, Trend\r\n| serialize Id = row_number(1000000)\r\n| join kind=inner (appData) on Name\r\n| project Id, Name = Activity, Type = 'Activity', ['Activity Count'] = TotalCount, Trend, ParentId = Id1\r\n| union (appData \r\n    | project Id, Name = Name, Type = 'Computer', ['Activity Count'] = TotalCount, Trend )\r\n| order by ['Activity Count'] desc, Name asc",
+        "size": 0,
+        "title": "User activities",
+        "timeContextFromParameter": "TimeRange",
+        "exportParameterName": "Userinfo",
+        "exportDefaultValue": "{ \"Name\":\"\", \"Type\":\"*\"}",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces",
+        "gridSettings": {
+          "formatters": [
+            {
+              "columnMatch": "Id",
+              "formatter": 5,
+              "formatOptions": {
+                "showIcon": true
+              }
+            },
+            {
+              "columnMatch": "Activity Count",
+              "formatter": 8,
+              "formatOptions": {
+                "min": 0,
+                "palette": "blueGreen",
+                "showIcon": true
+              }
+            },
+            {
+              "columnMatch": "Trend",
+              "formatter": 9,
+              "formatOptions": {
+                "palette": "greenDark",
+                "showIcon": true
+              }
+            },
+            {
+              "columnMatch": "IpAddress",
+              "formatter": 5,
+              "formatOptions": {
+                "showIcon": true
+              }
+            },
+            {
+              "columnMatch": "ParentId",
+              "formatter": 5,
+              "formatOptions": {
+                "showIcon": true
+              }
+            }
+          ],
+          "filter": true,
+          "hierarchySettings": {
+            "idColumn": "Id",
+            "parentColumn": "ParentId",
+            "treeType": 0,
+            "expanderColumn": "Name"
+          }
+        }
+      },
+      "conditionalVisibility": {
+        "parameterName": "selectedTab",
+        "comparison": "isEqualTo",
+        "value": "WIAM"
+      },
+      "customWidth": "50",
+      "name": "query - 3"
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "//let Users = dynamic({Userinfo});\r\nlet data = SecurityEvent\r\n| where \"{Activity:lable}\" == \"All\" or Activity in ({Activity})\r\n| where Activity == '{ActivityPiker}' or '{ActivityPiker}' == \"All\" and AccountType == 'Machine'\r\n| extend user = extract(@'^(.*\\\\)?([^@]*)(@.*)?$', 2, tolower(Account))\r\n| where dynamic({Userinfo}).Type == '*' or (dynamic({Userinfo}).Type == 'Computer' and user == dynamic({Userinfo}).Name);\r\nlet appData = data\r\n| summarize TotalCount = count() by Computer\r\n| join kind=inner (data\r\n    | make-series Trend = count() default = 0 on TimeGenerated in range({TimeRange:start}, {TimeRange:end}, {TimeRange:grain}) by Computer\r\n    | project-away TimeGenerated) on Computer\r\n| order by TotalCount desc, Computer asc\r\n| project Computer, TotalCount, Trend\r\n| serialize Id = row_number();\r\ndata\r\n| summarize TotalCount = count() by Activity , Computer\r\n| join kind=inner (data\r\n    | make-series Trend = count() default = 0 on TimeGenerated in range({TimeRange:start}, {TimeRange:end}, {TimeRange:grain}) by Computer, Activity\r\n    | project-away TimeGenerated) on Computer, Activity\r\n| order by TotalCount desc, Computer asc\r\n| project Computer, Activity, TotalCount, Trend\r\n| serialize Id = row_number(1000000)\r\n| join kind=inner (appData) on Computer\r\n| project Id, Name = Activity, Type = 'Activity', ['Activity Count'] = TotalCount, Trend, ParentId = Id1\r\n| union (appData \r\n    | project Id, Name = Computer, Type = 'Computer', ['Activity Count'] = TotalCount, Trend )\r\n| order by ['Activity Count'] desc, Name asc",
+        "size": 0,
+        "title": "Machine activities",
+        "timeContextFromParameter": "TimeRange",
+        "exportFieldName": "",
+        "exportParameterName": "MachineInfo",
+        "exportDefaultValue": "{ \"Name\":\"\", \"Type\":\"*\"}",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces",
+        "gridSettings": {
+          "formatters": [
+            {
+              "columnMatch": "Id",
+              "formatter": 5,
+              "formatOptions": {
+                "showIcon": true
+              }
+            },
+            {
+              "columnMatch": "Activity Count",
+              "formatter": 8,
+              "formatOptions": {
+                "min": 0,
+                "palette": "blue",
+                "showIcon": true
+              }
+            },
+            {
+              "columnMatch": "Trend",
+              "formatter": 9,
+              "formatOptions": {
+                "showIcon": true
+              }
+            },
+            {
+              "columnMatch": "ParentId",
+              "formatter": 5,
+              "formatOptions": {
+                "showIcon": true
+              }
+            }
+          ],
+          "filter": true,
+          "hierarchySettings": {
+            "idColumn": "Id",
+            "parentColumn": "ParentId",
+            "treeType": 0,
+            "expanderColumn": "Name"
+          }
+        }
+      },
+      "conditionalVisibility": {
+        "parameterName": "selectedTab",
+        "comparison": "isEqualTo",
+        "value": "WIAM"
+      },
+      "customWidth": "50",
+      "name": "query - 4"
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "let Users = dynamic({Userinfo});\r\nlet Machines = dynamic({MachineInfo});\r\nSecurityEvent\r\n| where \"{Activity:lable}\" == \"All\" or Activity in ({Activity})\r\n| where Activity == '{ActivityPiker}' or '{ActivityPiker}' == \"All\"\r\n| extend Name = extract(@'^(.*\\\\)?([^@]*)(@.*)?$', 2, tolower(Account))\r\n| where (Users.Type == '*' or (Users.Type == 'Computer' and Name == Users.Name)) and (Machines.Type == '*' or (Machines.Type == 'Computer' and Computer == Machines.Name))\r\n| extend Status = iif(Activity contains \"success\",\"✔️ Success\" , iif(Activity contains \"faile\", \"❌Faile\", \"none\"))\r\n| summarize Count = count() by Name, Computer,AccountType, Activity, IpAddress , Process, CallerProcessId, CallerProcessName, CommandLine, FilePath, IpPort,GroupMembership, Status, bin(TimeGenerated, 1d), Detalis=\"more details\"\r\n| project  Name, Computer,AccountType, Activity, IpAddress, CallerProcessId, CallerProcessName, CommandLine, FilePath, IpPort, Process, GroupMembership, Status, TimeGenerated, Count, Detalis\r\n| order by Count\r\n",
+        "size": 0,
+        "title": "Full details",
+        "timeContextFromParameter": "TimeRange",
+        "exportParameterName": "Info",
+        "exportDefaultValue": "\"*\"",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces",
+        "gridSettings": {
+          "formatters": [
+            {
+              "columnMatch": "IpAddress",
+              "formatter": 5,
+              "formatOptions": {
+                "showIcon": true
+              }
+            },
+            {
+              "columnMatch": "CallerProcessId",
+              "formatter": 5,
+              "formatOptions": {
+                "showIcon": true
+              }
+            },
+            {
+              "columnMatch": "CallerProcessName",
+              "formatter": 5,
+              "formatOptions": {
+                "showIcon": true
+              }
+            },
+            {
+              "columnMatch": "CommandLine",
+              "formatter": 5,
+              "formatOptions": {
+                "showIcon": true
+              }
+            },
+            {
+              "columnMatch": "FilePath",
+              "formatter": 5,
+              "formatOptions": {
+                "showIcon": true
+              }
+            },
+            {
+              "columnMatch": "IpPort",
+              "formatter": 5,
+              "formatOptions": {
+                "showIcon": true
+              }
+            },
+            {
+              "columnMatch": "GroupMembership",
+              "formatter": 5,
+              "formatOptions": {
+                "showIcon": true
+              }
+            },
+            {
+              "columnMatch": "TimeGenerated",
+              "formatter": 6,
+              "formatOptions": {
+                "showIcon": true
+              }
+            },
+            {
+              "columnMatch": "Count",
+              "formatter": 8,
+              "formatOptions": {
+                "min": 0,
+                "palette": "greenBlue",
+                "showIcon": true
+              }
+            },
+            {
+              "columnMatch": "Detalis",
+              "formatter": 7,
+              "formatOptions": {
+                "linkTarget": "GenericDetails",
+                "linkIsContextBlade": true,
+                "showIcon": true
+              }
+            },
+            {
+              "columnMatch": "detalis",
+              "formatter": 7,
+              "formatOptions": {
+                "linkTarget": "GenericDetails",
+                "linkIsContextBlade": true,
+                "showIcon": true
+              }
+            }
+          ],
+          "rowLimit": 1000,
+          "filter": true
+        }
+      },
+      "conditionalVisibility": {
+        "parameterName": "selectedTab",
+        "comparison": "isEqualTo",
+        "value": "WIAM"
+      },
+      "name": "query - 5"
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "let Users = dynamic({Userinfo});\r\nlet Info = dynamic({Info});\r\nlet Machines = dynamic({MachineInfo});\r\nSecurityEvent\r\n| where Info == \"*\" or Process == Info.Process\r\n| where Process != \"\" and Process != \"-\"\r\n| where \"{Activity:lable}\" == \"All\" or Activity in ({Activity})\r\n| where Activity == '{ActivityPiker}' or '{ActivityPiker}' == \"All\"\r\n| extend Name = extract(@'^(.*\\\\)?([^@]*)(@.*)?$', 2, tolower(Account))\r\n| where (Users.Type == '*' or (Users.Type == 'Computer' and Name == Users.Name)) and (Machines.Type == '*' or (Machines.Type == 'Computer' and Computer == Machines.Name))\r\n| summarize Count = count() by Process, bin(TimeGenerated, 1h)",
+        "size": 0,
+        "title": "Processes",
+        "color": "lightBlue",
+        "timeContextFromParameter": "TimeRange",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces",
+        "visualization": "areachart"
+      },
+      "conditionalVisibility": {
+        "parameterName": "selectedTab",
+        "comparison": "isEqualTo",
+        "value": "WIAM"
+      },
+      "customWidth": "30",
+      "name": "query - 6"
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "let Users = dynamic({Userinfo});\r\nlet Info = dynamic({Info});\r\nlet Machines = dynamic({MachineInfo});\r\nSecurityEvent\r\n| where Process != \"\" and Process != \"-\"\r\n| where \"{Activity:lable}\" == \"All\" or Activity in ({Activity})\r\n| where Activity == '{ActivityPiker}' or '{ActivityPiker}' == \"All\"\r\n| where Info == \"*\" or Process == Info.Process\r\n| extend user = extract(@'^(.*\\\\)?([^@]*)(@.*)?$', 2, tolower(Account))\r\n| where (Users.Type == '*' or (Users.Type == 'Computer' and user == Users.Name)) and (Machines.Type == '*' or (Machines.Type == 'Computer' and Computer == Machines.Name))\r\n| summarize Count = count() by Process, Activity, user, Computer, bin(TimeGenerated, 1h)\r\n| order by TimeGenerated, Count",
+        "size": 0,
+        "title": "Processes details",
+        "timeContextFromParameter": "TimeRange",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces",
+        "gridSettings": {
+          "filter": true
+        }
+      },
+      "conditionalVisibility": {
+        "parameterName": "selectedTab",
+        "comparison": "isEqualTo",
+        "value": "WIAM"
+      },
+      "customWidth": "70",
+      "name": "query - 8"
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "let Users = dynamic({Userinfo});\r\nlet Info = dynamic({Info});\r\nlet Machines = dynamic({MachineInfo});\r\nSecurityEvent\r\n| where LogonTypeName != \"\"\r\n| where \"{Activity:lable}\" == \"All\" or Activity in ({Activity})\r\n| where Activity == '{ActivityPiker}' or '{ActivityPiker}' == \"All\"\r\n| where Info == \"*\" or Activity == Info.Activity\r\n| extend user = extract(@'^(.*\\\\)?([^@]*)(@.*)?$', 2, tolower(Account))\r\n| where (Users.Type == '*' or (Users.Type == 'Computer' and user == Users.Name)) and (Machines.Type == '*' or (Machines.Type == 'Computer' and Computer == Machines.Name))\r\n| summarize Count = count() by LogonTypeName = strcat( \"Logon type: \", LogonTypeName), Activity, user\r\n| order by Count",
+        "size": 0,
+        "title": "Logon activity types",
+        "timeContextFromParameter": "TimeRange",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces",
+        "gridSettings": {
+          "formatters": [
+            {
+              "columnMatch": "Count",
+              "formatter": 8,
+              "formatOptions": {
+                "min": 0,
+                "palette": "green",
+                "showIcon": true,
+                "aggregation": "Sum"
+              }
+            }
+          ],
+          "filter": true,
+          "hierarchySettings": {
+            "treeType": 1,
+            "groupBy": [
+              "LogonTypeName",
+              "Activity"
+            ],
+            "expandTopLevel": false
+          }
+        }
+      },
+      "conditionalVisibility": {
+        "parameterName": "selectedTab",
+        "comparison": "isEqualTo",
+        "value": "WIAM"
+      },
+      "customWidth": "70",
+      "name": "query - 7"
+    },
+    {
+      "type": 9,
+      "content": {
+        "version": "KqlParameterItem/1.0",
+        "parameters": [
+          {
+            "id": "1025a43d-241c-4e40-95dc-c9eb9c789bc5",
+            "version": "KqlParameterItem/1.0",
+            "name": "TimeRange",
+            "type": 4,
+            "isRequired": true,
+            "value": {
+              "durationMs": 7776000000
+            },
+            "typeSettings": {
+              "selectableValues": [
+                {
+                  "durationMs": 300000
+                },
+                {
+                  "durationMs": 900000
+                },
+                {
+                  "durationMs": 1800000
+                },
+                {
+                  "durationMs": 3600000
+                },
+                {
+                  "durationMs": 14400000
+                },
+                {
+                  "durationMs": 43200000
+                },
+                {
+                  "durationMs": 86400000
+                },
+                {
+                  "durationMs": 172800000
+                },
+                {
+                  "durationMs": 259200000
+                },
+                {
+                  "durationMs": 604800000
+                },
+                {
+                  "durationMs": 1209600000
+                },
+                {
+                  "durationMs": 2419200000
+                },
+                {
+                  "durationMs": 2592000000
+                },
+                {
+                  "durationMs": 5184000000
+                },
+                {
+                  "durationMs": 7776000000
+                }
+              ],
+              "allowCustom": true
+            }
+          },
+          {
+            "id": "bc241870-7874-4927-8c74-d17e747522b1",
+            "version": "KqlParameterItem/1.0",
+            "name": "Computer",
+            "type": 5,
+            "isRequired": true,
+            "multiSelect": true,
+            "quote": "'",
+            "delimiter": ",",
+            "query": "Syslog\r\n| summarize syslogEventsCount = count() by Computer\r\n| sort by syslogEventsCount desc\r\n| project Computer\r\n",
+            "value": [
+              "value::all"
+            ],
+            "typeSettings": {
+              "additionalResourceOptions": [
+                "value::all"
+              ],
+              "selectAllValue": "All"
+            },
+            "queryType": 0,
+            "resourceType": "microsoft.operationalinsights/workspaces"
+          },
+          {
+            "id": "e073f36e-2fb5-421d-9099-217205b247f5",
+            "version": "KqlParameterItem/1.0",
+            "name": "Severity",
+            "type": 2,
+            "isRequired": true,
+            "multiSelect": true,
+            "quote": "'",
+            "delimiter": ",",
+            "value": [
+              "value::all"
+            ],
+            "typeSettings": {
+              "additionalResourceOptions": [
+                "value::all"
+              ],
+              "selectAllValue": "*"
+            },
+            "jsonData": "[\"Emergency\", \"Alert\", \"Critical\", \"Error\", \"Warning\", \"Notice\", \"Informational\", \"Debug\"]",
+            "timeContext": {
+              "durationMs": 0
+            },
+            "timeContextFromParameter": "TimeRange"
+          }
+        ],
+        "style": "pills",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces"
+      },
+      "conditionalVisibility": {
+        "parameterName": "selectedTab",
+        "comparison": "isEqualTo",
+        "value": "Linux"
+      },
+      "name": "parameters - 1"
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "Syslog\r\n| summarize count() by SeverityLevel\r\n| extend severityNumber = iif(SeverityLevel == 'emerg' or SeverityLevel == 'panic', 0, iif(SeverityLevel == 'alert', 1, iif(SeverityLevel == 'crit', 2, iif(SeverityLevel == 'err' or SeverityLevel == 'error', 3, iif(SeverityLevel == 'warning' or SeverityLevel == 'warn', 4, iif(SeverityLevel == 'notice', 5, iif(SeverityLevel == 'info', 6, iif(SeverityLevel == 'debug', 7, 8))))))))\r\n| sort by severityNumber asc\r\n| extend Severity = iif(SeverityLevel == 'emerg' or SeverityLevel == 'panic', 'Emergency', iif(SeverityLevel == 'alert', 'Alert', iif(SeverityLevel == 'crit', 'Critical', iif(SeverityLevel == 'err' or SeverityLevel == 'error', 'Error', iif(SeverityLevel == 'warning' or SeverityLevel == 'warn', 'Warning', iif(SeverityLevel == 'notice', 'Notice', iif(SeverityLevel == 'info', 'Informational', iif(SeverityLevel == 'debug', 'Debug', 'Unknown'))))))))\r\n| project-away severityNumber\r\n| where \"*\" in ({Severity}) or Severity in ({Severity})\r\n",
+        "size": 4,
+        "timeContextFromParameter": "TimeRange",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces",
+        "visualization": "tiles",
+        "tileSettings": {
+          "titleContent": {
+            "columnMatch": "SeverityLevel",
+            "formatter": 1,
+            "formatOptions": {
+              "showIcon": true
+            }
+          },
+          "leftContent": {
+            "columnMatch": "count_",
+            "formatter": 12,
+            "formatOptions": {
+              "palette": "hotCold",
+              "showIcon": true
+            },
+            "numberFormat": {
+              "unit": 17,
+              "options": {
+                "style": "decimal",
+                "maximumFractionDigits": 2,
+                "maximumSignificantDigits": 3
+              }
+            }
+          },
+          "showBorder": false,
+          "sortOrderField": 2
+        }
+      },
+      "conditionalVisibility": {
+        "parameterName": "selectedTab",
+        "comparison": "isEqualTo",
+        "value": "Linux"
+      },
+      "name": "query - 2"
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "Syslog\r\n| where \"{Computer:lable}\" == \"All\" or Computer in ({Computer})\r\n| extend Severity = iif(SeverityLevel == 'emerg' or SeverityLevel == 'panic', 'Emergency', iif(SeverityLevel == 'alert', 'Alert', iif(SeverityLevel == 'crit', 'Critical', iif(SeverityLevel == 'err' or SeverityLevel == 'error', 'Error', iif(SeverityLevel == 'warning' or SeverityLevel == 'warn', 'Warning', iif(SeverityLevel == 'notice', 'Notice', iif(SeverityLevel == 'info', 'Informational', iif(SeverityLevel == 'debug', 'Debug', 'Unknown'))))))))\r\n| where \"*\" in ({Severity}) or Severity in ({Severity})\r\n| where SeverityLevel in (\"emerg\")\r\n| summarize count() by Computer, TimeGenerated\r\n",
+        "size": 1,
+        "title": "\"Emergency\" level events, by computer",
+        "noDataMessage": "No emergency events within the defined scope",
+        "timeContextFromParameter": "TimeRange",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces",
+        "visualization": "timechart"
+      },
+      "conditionalVisibility": {
+        "parameterName": "selectedTab",
+        "comparison": "isEqualTo",
+        "value": "Linux"
+      },
+      "customWidth": "33",
+      "name": "query - 2 - Copy"
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "Syslog\r\n| where \"{Computer:lable}\" == \"All\" or Computer in ({Computer})\r\n| extend Severity = iif(SeverityLevel == 'emerg' or SeverityLevel == 'panic', 'Emergency', iif(SeverityLevel == 'alert', 'Alert', iif(SeverityLevel == 'crit', 'Critical', iif(SeverityLevel == 'err' or SeverityLevel == 'error', 'Error', iif(SeverityLevel == 'warning' or SeverityLevel == 'warn', 'Warning', iif(SeverityLevel == 'notice', 'Notice', iif(SeverityLevel == 'info', 'Informational', iif(SeverityLevel == 'debug', 'Debug', 'Unknown'))))))))\r\n| where \"*\" in ({Severity}) or Severity in ({Severity})\r\n| where SeverityLevel in (\"crit\")\r\n| summarize count() by Computer, TimeGenerated\r\n",
+        "size": 1,
+        "title": "\"Critical\" level events, by computer",
+        "noDataMessage": "No critical events within the defined scope",
+        "timeContextFromParameter": "TimeRange",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces",
+        "visualization": "timechart"
+      },
+      "conditionalVisibility": {
+        "parameterName": "selectedTab",
+        "comparison": "isEqualTo",
+        "value": "Linux"
+      },
+      "customWidth": "33",
+      "name": "query - 2 - Copy"
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "Syslog\r\n| where \"{Computer:lable}\" == \"All\" or Computer in ({Computer})\r\n| extend Severity = iif(SeverityLevel == 'emerg' or SeverityLevel == 'panic', 'Emergency', iif(SeverityLevel == 'alert', 'Alert', iif(SeverityLevel == 'crit', 'Critical', iif(SeverityLevel == 'err' or SeverityLevel == 'error', 'Error', iif(SeverityLevel == 'warning' or SeverityLevel == 'warn', 'Warning', iif(SeverityLevel == 'notice', 'Notice', iif(SeverityLevel == 'info', 'Informational', iif(SeverityLevel == 'debug', 'Debug', 'Unknown'))))))))\r\n| where \"*\" in ({Severity}) or Severity in ({Severity})\r\n| where SeverityLevel in (\"alert\")\r\n| summarize count() by Computer, TimeGenerated\r\n",
+        "size": 1,
+        "title": "\"Alert\" level events, by computer",
+        "noDataMessage": "No alert events within the defined scope",
+        "timeContextFromParameter": "TimeRange",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces",
+        "visualization": "timechart"
+      },
+      "conditionalVisibility": {
+        "parameterName": "selectedTab",
+        "comparison": "isEqualTo",
+        "value": "Linux"
+      },
+      "customWidth": "33",
+      "name": "query - 2 - Copy - Copy"
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "Syslog\r\n| where Computer in ({Computer})\r\n| extend Severity = iif(SeverityLevel == 'emerg' or SeverityLevel == 'panic', 'Emergency', iif(SeverityLevel == 'alert', 'Alert', iif(SeverityLevel == 'crit', 'Critical', iif(SeverityLevel == 'err' or SeverityLevel == 'error', 'Error', iif(SeverityLevel == 'warning' or SeverityLevel == 'warn', 'Warning', iif(SeverityLevel == 'notice', 'Notice', iif(SeverityLevel == 'info', 'Informational', iif(SeverityLevel == 'debug', 'Debug', 'Unknown'))))))))\r\n| extend SeverityNumber = iif(SeverityLevel == 'emerg' or SeverityLevel == 'panic', 0, iif(SeverityLevel == 'alert', 1, iif(SeverityLevel == 'crit', 2, iif(SeverityLevel == 'err' or SeverityLevel == 'error', 3, iif(SeverityLevel == 'warning' or SeverityLevel == 'warn', 4, iif(SeverityLevel == 'notice', 5, iif(SeverityLevel == 'info', 6, iif(SeverityLevel == 'debug', 7, 8))))))))\r\n| where Severity in ({Severity})\r\n|extend Computer = iif(isempty(_ResourceId), Computer, _ResourceId)\r\n| project TimeGenerated, Computer, SeverityLevel, SeverityNumber, Facility, HostIP, ProcessNameAndID = strcat(ProcessName, ' (', iff(isempty(ProcessID), \"-\", tostring(ProcessID)), ')')  \r\n",
+        "size": 0,
+        "title": "Events",
+        "noDataMessage": "No events",
+        "timeContextFromParameter": "TimeRange",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces",
+        "gridSettings": {
+          "formatters": [
+            {
+              "columnMatch": "SeverityNumber",
+              "formatter": 8,
+              "formatOptions": {
+                "min": 7,
+                "max": 0,
+                "palette": "redDark",
+                "showIcon": true
+              }
+            }
+          ]
+        }
+      },
+      "conditionalVisibility": {
+        "parameterName": "selectedTab",
+        "comparison": "isEqualTo",
+        "value": "Linux"
+      },
+      "name": "query - 2 - Copy - Copy - Copy"
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "Syslog\r\n| where \"{Computer:lable}\" == \"All\" or Computer in ({Computer})\r\n| extend Severity = iif(SeverityLevel == 'emerg' or SeverityLevel == 'panic', 'Emergency', iif(SeverityLevel == 'alert', 'Alert', iif(SeverityLevel == 'crit', 'Critical', iif(SeverityLevel == 'err' or SeverityLevel == 'error', 'Error', iif(SeverityLevel == 'warning' or SeverityLevel == 'warn', 'Warning', iif(SeverityLevel == 'notice', 'Notice', iif(SeverityLevel == 'info', 'Informational', iif(SeverityLevel == 'debug', 'Debug', 'Unknown'))))))))\r\n| where \"*\" in ({Severity}) or Severity in ({Severity})\r\n| summarize count() by SyslogMessage\r\n",
+        "size": 0,
+        "title": "Syslog messages of events",
+        "noDataMessage": "No messages",
+        "timeContextFromParameter": "TimeRange",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces",
+        "visualization": "piechart"
+      },
+      "conditionalVisibility": {
+        "parameterName": "selectedTab",
+        "comparison": "isEqualTo",
+        "value": "Linux"
+      },
+      "customWidth": "50",
+      "name": "query - 7"
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "Syslog\r\n| where \"{Computer:lable}\" == \"All\" or Computer in ({Computer})\r\n| extend Severity = iif(SeverityLevel == 'emerg' or SeverityLevel == 'panic', 'Emergency', iif(SeverityLevel == 'alert', 'Alert', iif(SeverityLevel == 'crit', 'Critical', iif(SeverityLevel == 'err' or SeverityLevel == 'error', 'Error', iif(SeverityLevel == 'warning' or SeverityLevel == 'warn', 'Warning', iif(SeverityLevel == 'notice', 'Notice', iif(SeverityLevel == 'info', 'Informational', iif(SeverityLevel == 'debug', 'Debug', 'Unknown'))))))))\r\n| where \"*\" in ({Severity}) or Severity in ({Severity})\r\n| summarize count() by Facility, ProcessName\r\n| project Process = strcat(ProcessName, ' (', Facility, ')'), Count = count_  \r\n",
+        "size": 0,
+        "title": "Process names of events",
+        "timeContextFromParameter": "TimeRange",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces",
+        "visualization": "piechart"
+      },
+      "conditionalVisibility": {
+        "parameterName": "selectedTab",
+        "comparison": "isEqualTo",
+        "value": "Linux"
+      },
+      "customWidth": "50",
+      "name": "query - 11"
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "Syslog\r\n| where \"{Computer:lable}\" == \"All\" or Computer in ({Computer})\r\n| extend Severity = iif(SeverityLevel == 'emerg' or SeverityLevel == 'panic', 'Emergency', iif(SeverityLevel == 'alert', 'Alert', iif(SeverityLevel == 'crit', 'Critical', iif(SeverityLevel == 'err' or SeverityLevel == 'error', 'Error', iif(SeverityLevel == 'warning' or SeverityLevel == 'warn', 'Warning', iif(SeverityLevel == 'notice', 'Notice', iif(SeverityLevel == 'info', 'Informational', iif(SeverityLevel == 'debug', 'Debug', 'Unknown'))))))))\r\n| where \"*\" in ({Severity}) or Severity in ({Severity})\r\n| summarize count() by Facility, SeverityLevel\r\n",
+        "size": 0,
+        "title": "Event distribution, by facility",
+        "noDataMessage": "No events",
+        "timeContextFromParameter": "TimeRange",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces",
+        "visualization": "piechart"
+      },
+      "conditionalVisibility": {
+        "parameterName": "selectedTab",
+        "comparison": "isEqualTo",
+        "value": "Linux"
+      },
+      "customWidth": "50",
+      "name": "query - 7 - Copy - Copy - Copy"
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "Syslog\r\n| where \"{Computer:lable}\" == \"All\" or Computer in ({Computer})\r\n| extend Severity = iif(SeverityLevel == 'emerg' or SeverityLevel == 'panic', 'Emergency', iif(SeverityLevel == 'alert', 'Alert', iif(SeverityLevel == 'crit', 'Critical', iif(SeverityLevel == 'err' or SeverityLevel == 'error', 'Error', iif(SeverityLevel == 'warning' or SeverityLevel == 'warn', 'Warning', iif(SeverityLevel == 'notice', 'Notice', iif(SeverityLevel == 'info', 'Informational', iif(SeverityLevel == 'debug', 'Debug', 'Unknown'))))))))\r\n| where \"*\" in ({Severity}) or Severity in ({Severity})\r\n| summarize count() by Facility, SeverityLevel",
+        "size": 0,
+        "title": "Severity levels, by facility",
+        "timeContextFromParameter": "TimeRange",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces",
+        "visualization": "categoricalbar"
+      },
+      "conditionalVisibility": {
+        "parameterName": "selectedTab",
+        "comparison": "isEqualTo",
+        "value": "Linux"
+      },
+      "customWidth": "50",
+      "name": "query - 11 - Copy"
+    }
+  ],
+  "fallbackResourceIds": [
+    "/subscriptions/<subscriptionID>/resourceGroups/<resourceGroup>/providers/Microsoft.OperationalInsights/workspaces/<LogAnalyticsWorkspace>"
+  ],
+  "fromTemplateId": "sentinel-UserWorkbook",
+  "$schema": "https://github.com/Microsoft/Application-Insights-Workbooks/blob/master/schema/workbook.json"
+}
