@@ -26,21 +26,10 @@ steps:
     chmod 600 ~/.ssh/id_rsa
     eval "$(ssh-agent -s)"
     ssh-add ~/.ssh/id_rsa 
-    ssh-keyscan -t rsa $(Ubuntu01IP) >> ~/.ssh/known_hosts
+    ssh-keyscan -t rsa $(ipaddress) >> ~/.ssh/known_hosts
   displayName: 'SSH setup'  
 
 - script: |
-    echo -e "[prod]\n$(Ubuntu01IP)" >> inventory.ini
+    echo -e "[prod]\n$(ipaddress)" >> inventory.ini
     ansible-playbook -i inventory.ini hardening.yml
   displayName: 'Harden VM'
-
-- script: |
-    docker run --rm -v ~/.ssh:/home/$(sshuser)/.ssh -v $(pwd):/share sfx20a/inspec exec https://github.com/dev-sec/linux-baseline -t ssh://$(sshuser)@$(ipaddress) -i /home/$(sshuser)/.ssh/id_rsa --chef-license accept --reporter json:inspec-output.json
-  continueOnError: true #proceed even if failed job
-  displayName: 'Hardening verfication'
-- task: PublishBuildArtifacts@1
-  inputs:
-    PathtoPublish:  $(Build.Repository.LocalPath)/inspec-output.json
-    ArtifactName: inspec
-  condition: succeededOrFailed() # proceed even if failed job     
-  displayName: 'Upload Hardening Result'

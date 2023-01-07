@@ -1,0 +1,29 @@
+# This Azure Pipeline does not require an Ansible VM to be installed in the user's environment.
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- task: UsePythonVersion@0
+  displayName: 'Install Python'
+
+- script: |
+    mkdir -p ~/.ssh
+    echo "$(sshkey)" | tr ' ' '\n' | sed -e '1,4d' | tac | sed -e '1,4d' | tac > ~/.ssh/id_rsa
+    sed "1 i -----BEGIN OPENSSH PRIVATE KEY-----" ~/.ssh/id_rsa > ~/.ssh/id_rsa1 && echo "-----END OPENSSH PRIVATE KEY-----" >> ~/.ssh/id_rsa1 && mv ~/.ssh/id_rsa1 ~/.ssh/id_rsa
+    chmod 600 ~/.ssh/id_rsa
+    eval "$(ssh-agent -s)"
+    ssh-add ~/.ssh/id_rsa 
+    ssh-keyscan -t rsa $(Ubuntu01IP) >> ~/.ssh/known_hosts
+  displayName: 'SSH setup'  
+
+- script: |
+    docker run --rm -v ~/.ssh:/home/$(sshuser)/.ssh -v $(pwd):/share sfx20a/inspec exec https://github.com/dev-sec/linux-baseline -t ssh://$(sshuser)@$(ipaddress) -i /home/$(sshuser)/.ssh/id_rsa --chef-license accept --reporter json:inspec-output.json
+  continueOnError: true #proceed even if failed job
+  displayName: 'Hardening verfication'
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish:  $(Build.Repository.LocalPath)/inspec-output.json
+    ArtifactName: inspec
+  condition: succeededOrFailed() # proceed even if failed job     
+  displayName: 'Upload Hardening Result'
