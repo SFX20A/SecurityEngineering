@@ -1,0 +1,33 @@
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- task: UsePythonVersion@0
+  displayName: 'Install Python'
+
+# install ansible
+- script: pip install ansible
+  displayName: 'Install Ansible'
+
+#- script: pip install -r https://raw.githubusercontent.com/ansible-collections/azure/dev/requirements-azure.txt
+# displayName: 'Install Azure modules needed'
+
+#- script: ansible-galaxy collection install azure.azcollection
+#  displayName: 'Install Ansible Azure Collection'
+
+# install OS hardening playbook
+- script: ansible-galaxy install dev-sec.os-hardening
+  displayName: 'Install os hardening playbook'   
+
+# harden VM
+- script: |
+    mkdir -p ~/.ssh
+    echo "$(sshkey)" | tr ' ' '\n' | sed -e '1,4d' | tac | sed -e '1,4d' | tac > ~/.ssh/id_rsa #add ssh key
+    sed "1 i -----BEGIN OPENSSH PRIVATE KEY-----" ~/.ssh/id_rsa > ~/.ssh/id_rsa1 && echo "-----END OPENSSH PRIVATE KEY-----" >> ~/.ssh/id_rsa1 && mv ~/.ssh/id_rsa1 ~/.ssh/id_rsa # fix ssh formatting issues
+    chmod 600 ~/.ssh/id_rsa
+    eval "$(ssh-agent -s)"
+    ssh-add ~/.ssh/id_rsa 
+    ssh-keyscan -t rsa $(ipaddress) >> ~/.ssh/known_hosts # add remote VM IP to known host 
+    echo -e "[prod]\n$(ipaddress)" >> inventory.ini # add remote VM IP to hardening inventory
+    ansible-playbook -i inventory.ini hardening.yml
+  displayName: 'Harden VM'
