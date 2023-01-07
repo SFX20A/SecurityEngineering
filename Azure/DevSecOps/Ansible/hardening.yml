@@ -1,7 +1,7 @@
 ---
 - name: Harden Prod
   hosts: prod
-  remote_user: augustine
+  remote_user: username
   become: yes
   roles:
     - dev-sec.os-hardening
