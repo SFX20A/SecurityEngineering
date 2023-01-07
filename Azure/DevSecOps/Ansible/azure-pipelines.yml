@@ -7,7 +7,6 @@ steps:
 - task: UsePythonVersion@0
   displayName: 'Install Python'
 
-# install ansible
 - script: pip install ansible
   displayName: 'Install Ansible'
 
@@ -17,19 +16,20 @@ steps:
 #- script: ansible-galaxy collection install azure.azcollection
 #  displayName: 'Install Ansible Azure Collection'
 
-# install OS hardening playbook
 - script: ansible-galaxy install dev-sec.os-hardening
   displayName: 'Install os hardening playbook'   
 
-# harden VM
 - script: |
     mkdir -p ~/.ssh
-    echo "$(sshkey)" | tr ' ' '\n' | sed -e '1,4d' | tac | sed -e '1,4d' | tac > ~/.ssh/id_rsa #add ssh key
-    sed "1 i -----BEGIN OPENSSH PRIVATE KEY-----" ~/.ssh/id_rsa > ~/.ssh/id_rsa1 && echo "-----END OPENSSH PRIVATE KEY-----" >> ~/.ssh/id_rsa1 && mv ~/.ssh/id_rsa1 ~/.ssh/id_rsa # fix ssh formatting issues
+    echo "$(sshkey)" | tr ' ' '\n' | sed -e '1,4d' | tac | sed -e '1,4d' | tac > ~/.ssh/id_rsa
+    sed "1 i -----BEGIN OPENSSH PRIVATE KEY-----" ~/.ssh/id_rsa > ~/.ssh/id_rsa1 && echo "-----END OPENSSH PRIVATE KEY-----" >> ~/.ssh/id_rsa1 && mv ~/.ssh/id_rsa1 ~/.ssh/id_rsa
     chmod 600 ~/.ssh/id_rsa
     eval "$(ssh-agent -s)"
     ssh-add ~/.ssh/id_rsa 
-    ssh-keyscan -t rsa $(ipaddress) >> ~/.ssh/known_hosts # add remote VM IP to known host 
-    echo -e "[prod]\n$(ipaddress)" >> inventory.ini # add remote VM IP to hardening inventory
+    ssh-keyscan -t rsa $(Ubuntu01IP) >> ~/.ssh/known_hosts
+  displayName: 'SSH setup'  
+
+- script: |
+    echo -e "[prod]\n$(Ubuntu01IP)" >> inventory.ini
     ansible-playbook -i inventory.ini hardening.yml
   displayName: 'Harden VM'
