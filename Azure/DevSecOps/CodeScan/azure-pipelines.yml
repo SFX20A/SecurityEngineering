@@ -47,3 +47,16 @@ jobs:
       PathtoPublish:  $(Build.Repository.LocalPath)/trufflehog-output.json
       ArtifactName: trufflehog
   condition: succeededOrFailed() # proceed even if failed job  
+
+- job: nmapscan #nmap scan
+  steps:
+  - script: |
+       apk add py-pip
+       docker run --rm -v $(pwd):/src sfx20a/nmap $(ipaddress) -oX /src/nmap-output.xml
+       cat /src/nmap-output.xml
+    continueOnError: true #proceed even if failed job
+  - task: PublishBuildArtifacts@1
+    inputs:
+      PathtoPublish:  $(Build.Repository.LocalPath)/nmap-output.xml
+      ArtifactName: nmap
+  condition: succeededOrFailed() # proceed even if failed job  
