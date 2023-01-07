@@ -1,0 +1,18 @@
+---
+- name: Harden Prod
+  hosts: prod
+  remote_user: augustine
+  become: yes
+  roles:
+    - dev-sec.os-hardening
+    
+  tasks:
+    - name: Ensure cron.daily has correct permissions
+      file: 
+        path: /etc/cron.daily
+        mode: '0611'
+
+    - name: Ensure cron.d has correct group permissions
+      file: 
+        path: /etc/cron.d
+        mode: '0611'
