@@ -33,3 +33,13 @@ steps:
     echo -e "[prod]\n$(Ubuntu01IP)" >> inventory.ini
     ansible-playbook -i inventory.ini hardening.yml
   displayName: 'Harden VM'
+
+- script: |
+    docker run --rm -v ~/.ssh:/home/$(sshuser)/.ssh -v $(pwd):/share sfx20a/inspec exec https://github.com/dev-sec/linux-baseline -t ssh://$(sshuser)@$(Ubuntu01IP) -i /home/$(sshuser)/.ssh/id_rsa --chef-license accept --reporter json:inspec-output.json
+  continueOnError: true #proceed even if failed job
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish:  $(Build.Repository.LocalPath)/inspec-output.json
+    ArtifactName: inspec
+  condition: succeededOrFailed() # proceed even if failed job     
+  displayName: 'Hardening Verification'
