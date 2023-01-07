@@ -2,6 +2,18 @@ pool:
   vmImage: ubuntu-latest
 
 jobs:
+- job: build # create environment
+  steps:
+    - task: UsePythonVersion@0
+      inputs:
+        versionSpec: '3.9'
+    - script: |
+        pip3 install --upgrade virtualenv
+        virtual env
+        source env/bin/activate
+        pip install -r requirements.txt
+        python manage.py check
+
 - job: sast #Static Analysis
   steps:
     - script: |
@@ -28,7 +40,7 @@ jobs:
 - job: secrets #secrets detection
   steps:
   - script: |
-       docker run --rm -v $(pwd):/src sfx20a/trufflehog https://$(gitpass)@dev.azure.com/gccscyberspace01/CICDPipelineTest/_git/CICDPipelineTest --json > trufflehog-output.json
+       docker run --rm -v $(pwd):/src sfx20a/trufflehog giturl --json > trufflehog-output.json
     continueOnError: true #proceed even if failed job
   - task: PublishBuildArtifacts@1
     inputs:
