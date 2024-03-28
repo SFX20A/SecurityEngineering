@@ -1,8 +1,4 @@
-variable "blacklist_domains" {
-  description = "Blacklisted Domains"
-  type        = list(any)
-  default     = ["example1.com", "example2.com", "example3.com"] # Add * if you want to block subdomains via wildcards.
-}
+
 
 variable "priority" {
   description = "Indicate rule priority"
