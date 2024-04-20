@@ -17,4 +17,4 @@ Solution Workflow:
 4. The lambda function replaces the container image repository's permissions with a deny all pull requests, preventing the deployment of vulnerable images into the production environment.
 
 
-*Note: AWS Inspector has 5 levels of severities: Informational, Low, Medium, High, Critical. This solution will only be invoked when a HIGH vulnerability is detected, edit accordingly based on project risk appetite. In this solution, multiple eventbridge rules are required to block multiple severity levels. 
+<i>*Note: AWS Inspector has 5 levels of severities: Informational, Low, Medium, High, Critical. This solution will only be invoked when a HIGH vulnerability is detected, edit accordingly based on project risk appetite. In this solution, multiple eventbridge rules are required to block multiple severity levels. </i>
