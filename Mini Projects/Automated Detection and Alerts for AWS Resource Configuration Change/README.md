@@ -12,7 +12,7 @@ Now, as changes are mostly controlled via the CI/CD pipeline, we can then enhanc
 
 In AWS, AWS Config can detect and create events for every change that is happening in the AWS, leveraging on this feature, we can then use AWS Eventbridge and AWS SNS to detect Config Change events and notify administrators on detection of such events.
 
-<img src="https://github.com/SFX20A/SecurityEngineering/blob/main/Mini%20Projects/Automated%20Detection%20and%20Alerts%20for%20AWS%20Resource%20Configuration%20Change/Architecture/AWS%20Configuration%20Change%20Detection.jpg?raw=true" />
+<img src="https://github.com/SFX20A/SecurityEngineering/blob/main/Mini%20Projects/Automated%20Detection%20and%20Alerts%20for%20AWS%20Resource%20Configuration%20Change/Architecture/AWS%20Configuration%20Change%20Detection.jpg?raw=true" align="center"/>
 
 The workflow of the solution:
 1. AWS Config detects changes to AWS resources.
