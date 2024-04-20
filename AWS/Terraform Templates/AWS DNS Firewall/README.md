@@ -10,17 +10,18 @@ There are 3 Terraform Modules where security engineers can opt to use, based on 
 
 
 AWS Managed Domain Blacklist: <br>
-This Terraform module utilises AWS Managed Domain Blacklists based on their threat intelligence. For more information, refer to the following website: https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/resolver-dns-firewall-managed-domain-lists.html <br>
+This Terraform module utilises AWS Managed Domain Blacklists based on their threat intelligence. <br>
+For more information, refer to the following website: https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/resolver-dns-firewall-managed-domain-lists.html <br>
 This Terraform module creates the following resources:
 1.  AWS DNS Firewall Rule 
 
-User Managed Domain Blacklist:
+User Managed Domain Blacklist: <br>
 This Terraform module requires the security engineer to input their own domain blacklist as variables into the terraform.
 1. AWS DNS Firewall rule group
 2. AWS DNS Firewall rule 
 
 
-User Managed Domain Whitelist:
+User Managed Domain Whitelist: <br>
 This Terraform module requires the security engineer to input their own domain whitelist as variables into the terraform.
 1. AWS DNS Firewall rule group
 2. AWS DNS Firewall rule 
