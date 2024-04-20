@@ -1,4 +1,4 @@
-# Automated Detection and ALerts for AWS Resource Configuration Changes
+# Automated Detection and Alerts for AWS Resource Configuration Changes
 
 The proliferation of IaC and DevOps has allowed companies to use CI/CD pipelines to deploy their changes in the cloud. With more and more companies adopting this modernised approach, the percentage of changes that require administrators to deploy changes to infrastructure via the cloud console has seen significant reduction, due to the benefits of utilising DevOps to deploy changes, such as:
 1. Changes can be controlled, monitored and approved via internal change management processes;
