@@ -7,3 +7,5 @@ The terraform code creates the following resources:
 2. AWS SNS Topic Subscription
 3. AWS SNS IAM Access Policy
 4. AWS Eventbridge Rule
+
+For more details, please refer to: https://github.com/SFX20A/SecurityEngineering/tree/main/Mini%20Projects/Automated%20Detection%20and%20Alerts%20for%20AWS%20Resource%20Configuration%20Change

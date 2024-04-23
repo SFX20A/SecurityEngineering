@@ -16,6 +16,9 @@ Solution Workflow:
 3. When AWS Inspector completes the scan and identifies a HIGH* vulnerability, AWS Eventbridge detects the finding and invokes a lambda function.
 4. The lambda^ function replaces the container image repository's permissions with a deny all pull requests, preventing the deployment of vulnerable images into the production environment.
 
+Terraform code to deploy the above can be found here: https://github.com/SFX20A/SecurityEngineering/tree/main/AWS/Terraform%20Templates/AWS%20ECR%20Block%20Vulnerable%20Container
+The code assumes that AWS Inspector has already been enabled for ECR Repository scanning.
+
 
 <i>*Note: AWS Inspector has 5 levels of severities: Informational, Low, Medium, High, Critical. This solution will only be invoked when a HIGH vulnerability is detected, edit accordingly based on project risk appetite. In this solution, multiple eventbridge rules are required to block multiple severity levels. </i>
 <br><i>^Note: The lambda function requires ecr:SetRepositoryPolicy permissions to be able to modify permissions in the AWS ECR repository.</i>
