@@ -19,6 +19,12 @@ Solution Workflow:
 Terraform code to deploy the above can be found here: https://github.com/SFX20A/SecurityEngineering/tree/main/AWS/Terraform%20Templates/AWS%20ECR%20Block%20Vulnerable%20Container
 The code assumes that AWS Inspector has already been enabled for ECR Repository scanning.
 
-
-<i>*Note: AWS Inspector has 5 levels of severities: Informational, Low, Medium, High, Critical. This solution will only be invoked when a HIGH vulnerability is detected, edit accordingly based on project risk appetite. In this solution, multiple eventbridge rules are required to block multiple severity levels. </i>
+<i>*Note: AWS Inspector has 6 levels of severities: Informational, Low, Medium, High, Critical, Untriaged. This solution will only be invoked when a HIGH vulnerability is detected, edit accordingly based on project risk appetite. In this solution, multiple eventbridge rules are required to block multiple severity levels. </i>
 <br><i>^Note: The lambda function requires ecr:SetRepositoryPolicy permissions to be able to modify permissions in the AWS ECR repository.</i>
+
+# v1
+Version 1 of the code implements the use of Eventbridge to trigger the Lambda with an identified severity level at Eventbridge, therefore, multiple Eventbridge rules needs to be created in order to cover mulitple severity levels  (i.e. 3 Eventbridge rules for Low, Medium and High).
+
+# v2
+Version 2 of the code implements a check at the lambda function (if severity level not equals UNTRIAGED or INFORMATIONAL), to run the IAM policy replacement. 
+

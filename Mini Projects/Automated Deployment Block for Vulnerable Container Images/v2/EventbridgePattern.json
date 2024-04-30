@@ -1,0 +1,9 @@
+{
+  "source": ["aws.inspector2"],
+  "detail-type": ["Inspector2 Finding"],
+  "detail": {
+    "resources": {
+      "type": ["AWS_ECR_CONTAINER_IMAGE"]
+    }
+  }
+}
