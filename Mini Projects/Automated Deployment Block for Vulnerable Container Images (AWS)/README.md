@@ -8,7 +8,7 @@ It is paramount that container images are scanned for vulnerabilities via an est
 # The Solution
 In the event that vulnerable containers are pushed into their container registries due to an unestablished change process or unauthorised deployment, this solution mitigates the risk that vulnerable containers are pulled and deployed into production environments.
 
-<img src="https://github.com/SFX20A/SecurityEngineering/blob/main/Mini%20Projects/Automated%20Deployment%20Block%20for%20Vulnerable%20Container%20Images/images/Architecture.jpg" />
+<img src="https://github.com/SFX20A/SecurityEngineering/blob/main/Mini%20Projects/Automated%20Deployment%20Block%20for%20Vulnerable%20Container%20Images%20(AWS)/images/Architecture.jpg" />
 
 Solution Workflow:
 1. Developer uploads vulnerable container image into AWS ECR.
