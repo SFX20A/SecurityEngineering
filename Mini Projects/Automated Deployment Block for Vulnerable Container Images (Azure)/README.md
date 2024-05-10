@@ -32,16 +32,16 @@ Solution Workflow:
 
 <img src="https://github.com/SFX20A/SecurityEngineering/blob/main/Mini%20Projects/Automated%20Deployment%20Block%20for%20Vulnerable%20Container%20Images%20(Azure)/images/LogAnalyticsQuery.png" />
 
-SecurityRecommendation 
-| where RecommendationDisplayName == "[Preview] Container images in Azure registry should have vulnerability findings resolved"
-| extend PropertiesData = parse_json(Properties)
-| project 
-    containerRepo = PropertiesData.resourceDetails.resourceName,
-    RecommendationSeverity,
-    registry = tostring(split(PropertiesData.resourceDetails.id, '/')[8]),
-    repositorylink = tostring(split(PropertiesData.additionalData.imageId, '/')[0]),
-    TimeGenerated
-| summarize TimeGenerated = make_list(TimeGenerated) by tostring(containerRepo), RecommendationSeverity, registry, repositorylink
+SecurityRecommendation <br>
+| where RecommendationDisplayName == "[Preview] Container images in Azure registry should have vulnerability findings resolved" <br>
+| extend PropertiesData = parse_json(Properties) <br>
+| project  <br>
+    containerRepo = PropertiesData.resourceDetails.resourceName, <br>
+    RecommendationSeverity, <br>
+    registry = tostring(split(PropertiesData.resourceDetails.id, '/')[8]),  <br>
+    repositorylink = tostring(split(PropertiesData.additionalData.imageId, '/')[0]), <br>
+    TimeGenerated <br>
+| summarize TimeGenerated = make_list(TimeGenerated) by tostring(containerRepo), RecommendationSeverity, registry, repositorylink <br>
 
 * Note: This KQL query leverages on a preview feature as indicated above. The name may change and thus the KQL query will need to modify accordingly.
 
